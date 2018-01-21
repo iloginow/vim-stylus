@@ -14,10 +14,10 @@ syntax case ignore
 
 " First of all define indented and not indented lines
 syntax match stylusNewLine "^\S\@="
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusVariable,stylusExplicitVariable
 
 syntax match stylusNewLineIndented "^\s\+"
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusProperty
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusProperty,stylusVariable,stylusExplicitVariable
 
 " ===============================================
 " ENCLOSURES
@@ -29,26 +29,47 @@ syntax match stylusEnclosure "\(\[\|\]\|{\|}\|(\|)\)"
 highlight def link stylusEnclosure SpecialChar
 
 " ===============================================
+" VARIABLES
+" ===============================================
+
+syntax match stylusVariable "\<\(\w\|-\|\$\)*\>"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusOperatorAssignment,stylusPropertyLookup
+      \ skipwhite
+
+syntax match stylusExplicitVariable "\$\(\w\|-\|\$\)*\>"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusOperatorAssignment,stylusPropertyLookup
+      \ skipwhite
+
+syntax match stylusExplicitVariable "\<arguments\>"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
+      \ skipwhite
+
+highlight def link stylusExplicitVariable NonText
+
+" ===============================================
 " UNITS
 " ===============================================
 
-syntax match stylusUnitInt "[-+]\=\d\+"
+syntax match stylusUnitInt "[-+]\=\d\+%\="
       \ contained
-      \ nextgroup=stylusOperatorRange,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusValues,stylusFont
+      \ nextgroup=stylusOperatorRange,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
       \ skipwhite
 
 highlight def link stylusUnitInt Number
 
-syntax match stylusUnitFloat "[-+]\=\d\=\.\d*"
+syntax match stylusUnitFloat "[-+]\=\d\=\.\d*%\="
       \ contained
-      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusValues,stylusFont
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
       \ skipwhite
 
 highlight def link stylusUnitFloat Number
 
 execute 'syntax match stylusUnitName "\(\<\|\d\@<=\)\(' . join(g:css_units, '\|') . '\)\>"
       \ contained
-      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
       \ skipwhite'
 
 highlight def link stylusUnitName Number
@@ -56,6 +77,20 @@ highlight def link stylusUnitName Number
 " ===============================================
 " OPERATORS
 " ===============================================
+
+" Assignment
+syntax match stylusOperatorAssignment "[:?]\=="
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
+      \ skipwhite
+
+highlight def link stylusOperatorAssignment Operator
+
+" Comma
+syntax match stylusComma ","
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
+      \ skipwhite
 
 " Range
 syntax match stylusOperatorRange "\.\.\.\="
@@ -70,6 +105,7 @@ highlight def link stylusOperatorRange Operator
 syntax region stylusString start=/\('\|"\)/ end=/\('\|"\)/
       \ containedin=ALLBUT,stylusComment
       \ keepend
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
 
 highlight def link stylusString String
 
@@ -198,20 +234,41 @@ highlight def link stylusSelectorCombinator Operator
 
 execute 'syntax match stylusProperty "\<\(' . join(g:css_props, '\|') . '\)\>:\="
       \ contained
-      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
       \ skipwhite'
 
 execute 'syntax match stylusProperty "\<\(' . join(g:svg_props, '\|') . '\)\>:\="
       \ contained
-      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
       \ skipwhite'
 
 syntax match stylusProperty "\(-webkit-\|-moz-\|-o-\|-ms-\|-khtml-\)\(\w\|-\)*:\="
       \ contained
-      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
       \ skipwhite
 
 highlight def link stylusProperty Type
+
+" ===============================================
+" PROPERTY LOOKUP
+" ===============================================
+
+execute 'syntax match stylusPropertyLookup "@\(' . join(g:css_props, '\|') . '\)\>"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
+      \ skipwhite'
+
+execute 'syntax match stylusPropertyLookup "@\(' . join(g:svg_props, '\|') . '\)\>"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
+      \ skipwhite'
+
+syntax match stylusPropertyLookup "@\(-webkit-\|-moz-\|-o-\|-ms-\|-khtml-\)\(\w\|-\)*"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
+      \ skipwhite
+
+highlight def link stylusPropertyLookup Type
 
 " ===============================================
 " VALUES
@@ -219,12 +276,12 @@ highlight def link stylusProperty Type
 
 execute 'syntax match stylusValues "\<\(' . join(g:css_values, '\|') . '\)\>"
       \ contained
-      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
       \ skipwhite'
 
 execute 'syntax match stylusValues "\<\(' . join(g:css_animatable_props, '\|') . '\)\>"
       \ contained
-      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
       \ skipwhite'
 
 highlight def link stylusValues PreCondit
@@ -236,18 +293,18 @@ highlight def link stylusValues PreCondit
 " Named
 execute 'syntax match stylusColor "\<\(' . join(g:css_colors, '\|') . '\)\>"
       \ contained
-      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
       \ skipwhite'
 
 syntax match stylusColor "\<transparent\>"
       \ contained
-      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
       \ skipwhite
 
 " Hexadecimal
 syntax match stylusColor "#\x\{3,6\}\>"
       \ contained
-      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
       \ skipwhite
 
 highlight def link stylusColor Constant
@@ -259,10 +316,18 @@ highlight def link stylusColor Constant
 " Highlight generic font families
 syntax match stylusFont "\<\(serif\|sans-serif\|monospace\)\>"
       \ contained
-      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup
       \ skipwhite
 
 highlight def link stylusFont Directory
+
+" ===============================================
+" Explicitly point out that the word before assignment operator is a variable
+syntax match stylusVariable "\<\(\w\|-\|\$\)*\(\s\=[:?]\==\)\@="
+      \ contained
+      \ nextgroup=stylusOperatorAssignment
+      \ skipwhite
+" ===============================================
 
 " ===============================================
 " COMMENTS
