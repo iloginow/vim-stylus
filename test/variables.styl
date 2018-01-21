@@ -1,0 +1,56 @@
+font-size = 14px
+
+body
+ font font-size Arial, sans-serif
+
+body {
+ font: 14px Arial, sans-serif;
+}
+
+font-size = 14px
+font = font-size "Lucida Grande", Arial
+
+body
+  font font, sans-serif
+
+$font-size = 14px
+body {
+  font: $font-size sans-serif;
+}
+
+#logo
+  position: absolute
+  top: 50%
+  left: 50%
+  width: w = 150px
+  height: h = 80px
+  margin-left: -(w / 2)
+  margin-top: -(h / 2)
+
+#logo
+  position: absolute
+  top: 50%
+  left: 50%
+  width: 150px
+  height: 80px
+  margin-left: -(@width / 2)
+  margin-top: -(@height / 2)
+
+position()
+  position: arguments
+  z-index: 1 unless @z-index
+
+#logo
+  z-index: 20
+  position: absolute
+
+#logo2
+  position: absolute
+
+body
+  color: red
+  ul
+    li
+      color: blue
+      a
+        background-color: @color

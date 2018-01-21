@@ -1,0 +1,19 @@
+let g:at_rules = [
+      \'css',
+      \'media',
+      \'font-face',
+      \'charset',
+      \'keyframes',
+      \'import',
+      \'require',
+      \'page',
+      \'host',
+      \'supports',
+      \'top-center',
+      \'counter-style',
+      \'document',
+      \'top-center',
+      \'namespace',
+      \'extend',
+      \'block'
+\]

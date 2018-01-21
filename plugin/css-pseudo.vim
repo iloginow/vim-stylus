@@ -1,0 +1,21 @@
+let g:css_pseudo = [
+      \'active',
+      \'checked',
+      \'disabled',
+      \'empty',
+      \'enabled',
+      \'focus',
+      \'hover',
+      \'in-range',
+      \'invalid',
+      \'link',
+      \'optional',
+      \'out-of-range',
+      \'read-only',
+      \'read-write',
+      \'required',
+      \'root',
+      \'target',
+      \'valid',
+      \'visited'
+\]
