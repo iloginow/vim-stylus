@@ -1,5 +1,4 @@
 let g:css_units = [
-      \'%',
       \'mm',
       \'cm',
       \'in',
