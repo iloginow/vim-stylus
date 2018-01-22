@@ -77,7 +77,7 @@ highlight def link stylusOperatorMultiplicative Operator
 " Assignment
 syntax match stylusOperatorAssignment "[:?]\=="
       \ contained
-      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean
       \ skipwhite
 
 highlight def link stylusOperatorAssignment Operator
@@ -85,7 +85,7 @@ highlight def link stylusOperatorAssignment Operator
 " Relational
 syntax match stylusOperatorRelational "\(==\|\!=\|>=\|<=\|>\|<\)"
       \ contained
-      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusVariable,stylusExplicitVariable,stylusParenthesised,stylusPropertyLookup,stylusColor
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusVariable,stylusExplicitVariable,stylusParenthesised,stylusPropertyLookup,stylusColor,stylusBoolean
       \ skipwhite
 
 " Comma
@@ -135,6 +135,15 @@ execute 'syntax match stylusUnitName "\(\<\|\d\@<=\)\(' . join(g:css_units, '\|'
       \ skipwhite'
 
 highlight def link stylusUnitName Number
+
+" ===============================================
+" BOOLEAN
+" ===============================================
+
+syntax match stylusBoolean "\<\(true\|false\)\>"
+      \ contained
+      \ nextgroup=stylusOperatorRelational,stylusOperatorAssignment
+      \ skipwhite
 
 " ===============================================
 " SELECTORS
