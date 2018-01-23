@@ -14,10 +14,10 @@ syntax case ignore
 
 " First of all define indented and not indented lines
 syntax match stylusNewLine "^\S\@="
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusVariable,stylusExplicitVariable
+      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusVariable,stylusExplicitVariable
 
 syntax match stylusNewLineIndented "^\s\+"
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusProperty,stylusVariable,stylusExplicitVariable
+      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusProperty,stylusVariable,stylusExplicitVariable
 
 " ===============================================
 " ENCLOSURES
@@ -56,7 +56,7 @@ highlight def link stylusExplicitVariable NonText
 " Unary
 syntax match stylusOperatorUnary "\([-+\!\~]\+\|\<not\>\)"
       \ contained
-      \ nextgroup=stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusParenthesised,stylusPropertyLookup
+      \ nextgroup=stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusParenthesised,stylusPropertyLookup,stylusOperatorUnary,stylusBoolean
       \ skipwhite
 
 highlight def link stylusOperatorUnary Operator
@@ -64,23 +64,17 @@ highlight def link stylusOperatorUnary Operator
 " Additive
 syntax match stylusOperatorAdditive "[-+]"
       \ contained
-      \ nextgroup=stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusParenthesised,stylusString,stylusPropertyLookup,stylusColor
+      \ nextgroup=stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusParenthesised,stylusPropertyLookup,stylusColor
       \ skipwhite
 
+highlight def link stylusOperatorAdditive Operator
+
 " Multiplicative
-syntax match stylusOperatorMultiplicative "\([/\*%]\|\*\*\)"
+syntax match stylusOperatorMultiplicative "\([/\%]\|\*\{1,2}\)"
       \ contained
       \ nextgroup=stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusParenthesised,stylusPropertyLookup
       \ skipwhite
 highlight def link stylusOperatorMultiplicative Operator
-
-" Assignment
-syntax match stylusOperatorAssignment "[:?]\=="
-      \ contained
-      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean
-      \ skipwhite
-
-highlight def link stylusOperatorAssignment Operator
 
 " Ternary
 syntax match stylusOperatorTernary "[:?]"
@@ -90,8 +84,14 @@ syntax match stylusOperatorTernary "[:?]"
 
 highlight def link stylusOperatorTernary Operator
 
+" Assignment
+syntax match stylusOperatorAssignment "[:?]\=="
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean
+      \ skipwhite
+
 " Relational
-syntax match stylusOperatorRelational "\(==\|\!=\|>=\|<=\|>\|<\)"
+syntax match stylusOperatorRelational "\(=\{2}\|\<is\>\(\s\<not\>\)\=\|\!=\|\<isnt\>\|>=\|<=\|>\|<\)"
       \ contained
       \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusVariable,stylusExplicitVariable,stylusParenthesised,stylusPropertyLookup,stylusColor,stylusBoolean
       \ skipwhite
@@ -124,7 +124,7 @@ highlight def link stylusOperatorInstance Operator
 " Variable definition
 syntax match stylusOperatorVarDefinition "\<is defined\>"
       \ contained
-      \ nextgroup=stylusOperatorLogical
+      \ nextgroup=stylusOperatorLogical,stylusOperatorTernary
       \ skipwhite
 
 highlight def link stylusOperatorVarDefinition Operator
@@ -138,6 +138,7 @@ syntax match stylusComma ","
 " Range
 syntax match stylusOperatorRange "\.\.\.\="
       \ contained
+      \ nextgroup=stylusUnitInt,stylusVariable,stylusExplicitVariable
 
 highlight def link stylusOperatorRange Operator
 
@@ -175,7 +176,7 @@ syntax match stylusUnitInt "[-+]\=\d\+%\="
 
 highlight def link stylusUnitInt Number
 
-syntax match stylusUnitFloat "[-+]\=\d\=\.\d*%\="
+syntax match stylusUnitFloat "[-+]\=\d\=\.\d\+%\="
       \ contained
       \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary
       \ skipwhite
@@ -188,6 +189,12 @@ execute 'syntax match stylusUnitName "\(\<\|\d\@<=\)\(' . join(g:css_units, '\|'
       \ skipwhite'
 
 highlight def link stylusUnitName Number
+
+" Resolve 'in' unit name and operator conflict
+syntax match stylusOperatorExistence "\s\@<=\<in\>"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean
+      \ skipwhite
 
 " ===============================================
 " BOOLEAN
@@ -414,7 +421,7 @@ highlight def link stylusFont Directory
 
 " ===============================================
 " Explicitly point out that the word before assignment operator is a variable
-syntax match stylusVariable "\<\(\w\|-\|\$\)*\(\s\=[:?]\==\)\@="
+syntax match stylusVariable "\<\(\w\|-\|\$\)*\(\s\=[:?]\==[^=]\)\@="
       \ contained
       \ nextgroup=stylusOperatorAssignment
       \ skipwhite
@@ -442,6 +449,7 @@ syntax region stylusString start=/\('\|"\)/ end=/\('\|"\)/
       \ keepend
       \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorAdditive,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusSprintf
       \ oneline
+      \ skipwhite
 
 highlight def link stylusString String
 

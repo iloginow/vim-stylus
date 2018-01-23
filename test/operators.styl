@@ -1,0 +1,305 @@
+$myvar = !0
+// => true
+
+$myvar = !!0
+// => false
+
+$myvar = !1
+// => false
+
+$myvar = !!5px
+// => true
+
+$myvar = -5px
+// => -5px
+
+$myvar = --5px
+// => 5px
+
+$myvar = not true
+// => false
+
+$myvar = not not true
+// => true
+
+a = 0
+b = 1
+
+$myvar = !a and !b
+// => false
+// parsed as: (!a) and (!b)
+
+$myvar = not a or b
+// => false
+// parsed as: not (a or b)
+
+list = 1 2 3
+
+$myvar = list[0]
+ // => 1
+
+$myvar = list[-1]
+ // => 3
+
+add(a, b)
+   if a is a 'unit' and b is a 'unit'
+     a + b
+   else
+     (error 'a and b must be units!')
+
+body
+  padding add(1,'5')
+  // => padding: error "a and b must be units";
+
+  padding add(1,'5')[0]
+  // => padding: error;
+
+  padding add(1,'5')[0] == error
+  // => padding: true;
+
+  padding add(1,'5')[1]
+  // => padding: "a and b must be units";
+
+if (val = add(1,'5'))[0] == error
+  error(val[1])
+
+$myvar = 1..5
+// => 1 2 3 4 5
+
+$myvar = 1...5
+// => 1 2 3 4
+
+$myvar = 5..1
+// => 5 4 3 2 1
+
+$myvar = 15px - 5px
+// => 10px
+
+$myvar = 5 - 2
+// => 3
+
+$myvar = 5in - 50mm
+// => 3.031in
+
+$myvar = 5s - 1000ms
+// => 4s
+
+$myvar = 20mm + 4in
+// => 121.6mm
+
+$myvar = "foo " + "bar"
+// => "foo bar"
+
+$myvar = "num " + 15
+// => "num 15"
+
+$myvar = 2000ms + (1s * 2)
+// => 4000ms
+
+$myvar = 5s / 2
+// => 2.5s
+
+$myvar = 4 % 2
+// => 0
+
+.foo
+  font: 14px/1.5;
+
+.foo
+  font: (14px/1.5);
+
+$myvar = 2 ** 8
+// => 256
+
+$myvar = 5 == 5
+// => true
+
+$myvar = 10 > 5
+// => true
+
+$myvar = #fff == #fff
+// => true
+
+$myvar = true == false
+// => false
+
+$myvar = wahoo == yay
+// => false
+
+$myvar = wahoo == wahoo
+// => true
+
+$myvar = "test" == "test"
+// => true
+
+$myvar = true is true
+// => true
+
+$myvar = 'hey' is not 'bye'
+// => true
+
+$myvar = 'hey' isnt 'bye'
+// => true
+
+$myvar = (foo bar) == (foo bar)
+// => true
+
+$myvar = (1 2 3) == (1 2 3)
+// => true
+
+$myvar = (1 2 3) == (1 1 3)
+// => false
+
+$myvar = 5 && 3
+// => 3
+
+$myvar = 0 || 5
+// => 5
+
+$myvar = 0 && 5
+// => 0
+
+$myvar = #fff is a 'rgba' and 15 is a 'unit'
+// => true
+
+nums = 1 2 3
+
+$myvar = 1 in nums
+// => true
+
+$myvar = 5 in nums
+// => false
+
+words = foo bar baz
+
+bar in words
+// => true
+
+HEY in words
+// => false
+
+vals = (error 'one') (error 'two')
+
+$myvar = error in vals
+// => false
+
+$myvar = (error 'one') in vals
+// => true
+
+$myvar = (error 'two') in vals
+// => true
+
+$myvar = (error 'something') in vals
+// => false
+
+pad(types = padding, n = 5px)
+  if padding in types
+    padding n
+  if margin in types
+    margin n
+
+body
+  pad()
+
+body
+  pad(margin)
+
+body
+  pad(padding margin, 10px)
+
+body {
+  padding: 5px;
+}
+
+body {
+  margin: 5px;
+}
+
+body {
+  padding: 10px;
+  margin: 10px;
+}
+
+body {
+  padding: 5px;
+}
+
+body {
+  margin: 5px;
+}
+
+body {
+  padding: 10px;
+  margin: 10px;
+}
+
+$color := white
+$color ?= white
+$color = $color is defined ? $color : white
+
+$color = white
+$color = black
+
+$myvar = $color
+// => black
+
+$color = white
+$color ?= black
+
+$color
+// => white
+
+$myvar = 15 is a 'unit'
+// => true
+
+$myvar = #fff is a 'rgba'
+// => true
+
+$myvar = 15 is a 'rgba'
+// => false
+
+type(#fff) == 'rgba'
+// => true
+
+$myvar = foo is defined
+// => false
+
+foo = 15px
+$myvar = foo is defined
+// => true
+
+$myvar = #fff is defined
+// => 'invalid "is defined" check on non-variable #fff'
+
+name = 'blue'
+lookup('light-' + name)
+// => null
+
+light-blue = #80e2e9
+lookup('light-' + name)
+// => #80e2e9
+
+body
+  if ohnoes
+    padding 5px
+
+body {
+  padding: 5px;
+}
+
+body
+  if ohnoes is defined
+    padding 5px
+
+num = 15
+num ? unit(num, 'px') : 20px
+// => 15px
+
+body
+  n = 5
+  padding: (n)em
+  padding: (n)%
+  padding: (n + 5)%
+  padding: (n * 5)px
+  padding: unit(n + 5, '%')
+  padding: unit(5 + 180 / 2, deg)
