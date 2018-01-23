@@ -64,7 +64,7 @@ highlight def link stylusOperatorUnary Operator
 " Additive
 syntax match stylusOperatorAdditive "[-+]"
       \ contained
-      \ nextgroup=stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusParenthesised,stylusString,stylusPropertyLookup
+      \ nextgroup=stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusParenthesised,stylusString,stylusPropertyLookup,stylusColor
       \ skipwhite
 
 " Multiplicative
@@ -142,6 +142,18 @@ syntax match stylusOperatorRange "\.\.\.\="
 highlight def link stylusOperatorRange Operator
 
 " ===============================================
+" SPRINTF
+" ===============================================
+
+syntax match stylusSprintf "%s\(.\{-}\s%\s\)\@="
+      \ contained
+
+syntax match stylusSprintf "%"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean
+      \ skipwhite
+
+" ===============================================
 " SUBSCRIPT
 " ===============================================
 
@@ -185,6 +197,8 @@ syntax match stylusBoolean "\<\(true\|false\)\>"
       \ contained
       \ nextgroup=stylusOperatorRelational,stylusOperatorAssignment,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary
       \ skipwhite
+
+highlight def link stylusBoolean Boolean
 
 " ===============================================
 " SELECTORS
@@ -370,18 +384,18 @@ highlight def link stylusValues PreCondit
 " Named
 execute 'syntax match stylusColor "\<\(' . join(g:css_colors, '\|') . '\)\>"
       \ contained
-      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusOperatorAdditive
       \ skipwhite'
 
 syntax match stylusColor "\<transparent\>"
       \ contained
-      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusOperatorAdditive
       \ skipwhite
 
 " Hexadecimal
 syntax match stylusColor "#\x\{3,6\}\>"
       \ contained
-      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusOperatorAdditive
       \ skipwhite
 
 highlight stylusColor term=underline ctermfg=133 guifg=#b169b2
@@ -414,7 +428,7 @@ syntax region stylusParenthesised matchgroup=stylusEnclosure start="[^\w\s]\@<=(
       \ contained
       \ contains=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary
       \ keepend
-      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary
       \ oneline
       \ skipwhite
 
@@ -424,8 +438,9 @@ syntax region stylusParenthesised matchgroup=stylusEnclosure start="[^\w\s]\@<=(
 
 syntax region stylusString start=/\('\|"\)/ end=/\('\|"\)/
       \ containedin=ALLBUT,stylusComment
+      \ contains=stylusSprintf
       \ keepend
-      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorAdditive,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorAdditive,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusSprintf
       \ oneline
 
 highlight def link stylusString String
