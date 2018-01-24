@@ -6,6 +6,29 @@ vendor(prop, args)
 .foo{$myvar + "bar"}:hover
   color: red
 
+.{$myvar}flex a:hover
+  background-color #fff
+
+{$some-selectors}endlikethat a:hover
+  {$some-property} inherit 2px
+  {$another-selector}endlikethat .anotherone:hover
+    {$some-prefixes}-transition .2s
+      {$selector}end #followedbyid
+        {$some-prefixes}flex center
+        {$selector}end [prop="value"]
+          some{$property} 2px
+        {$selector}end ^[0]
+          some{$property} 2px
+        {$selector}end ~/somesort
+          some{$property} 2px
+        {$selector}end &somesort
+          some{$property} 2px
+          {$property}tail #fff
+            .{$selector} a:hover
+              some{$property} 2px
+            {$selector}end a:hover
+              some{$property} 2px
+
 border-radius()
   vendor('border-radius', arguments)
 

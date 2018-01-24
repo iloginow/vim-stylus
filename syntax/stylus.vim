@@ -50,56 +50,6 @@ syntax match stylusExplicitVariable "\<arguments\>"
 highlight def link stylusExplicitVariable NonText
 
 " ===============================================
-" INTERPOLATION
-" ===============================================
-
-" Prepend is always a property
-syntax match stylusProperty "[\w-]\+{\@="
-      \ contained
-      \ nextgroup=stylusInterpolationProperties
-
-syntax region stylusInterpolation matchgroup=stylusEnclosure start="{" end="}"
-      \ contained
-      \ contains=stylusVariable,stylusExplicitVariable,stylusOperatorUnary,stylusUnitInt,stylusUnitFloat,stylusParenthesised
-      \ keepend
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusInterpolationSelectorsTail,stylusInterpolationPropertiesTail
-      \ oneline
-      \ skipwhite
-
-syntax region stylusInterpolationSelectors matchgroup=stylusEnclosure start="{" end="}"
-      \ contained
-      \ contains=stylusVariable,stylusExplicitVariable,stylusOperatorUnary,stylusUnitInt,stylusUnitFloat,stylusParenthesised
-      \ keepend
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectorsTail
-      \ oneline
-      \ skipwhite
-
-syntax region stylusInterpolationProperties matchgroup=stylusEnclosure start="{" end="}"
-      \ contained
-      \ contains=stylusVariable,stylusExplicitVariable,stylusOperatorUnary,stylusUnitInt,stylusUnitFloat,stylusParenthesised
-      \ keepend
-      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusProperty,stylusInterpolationPropertiesTail
-      \ oneline
-      \ skipwhite
-
-syntax match stylusInterpolationPropertiesTail "}\@<=[\w-]\+"
-      \ contained
-      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusProperty,stylusInterpolationProperties
-      \ skipwhite
-
-" Tail is a selector by default
-syntax match stylusInterpolationSelectorsTail "}\@<=[\w-]\+"
-      \ contained
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
-      \ skipwhite
-
-" Tail is a property if followed by a unit
-syntax match stylusInterpolationPropertiesTail "}\@<=[\w-]\+\(:\=\s\([-+\.]\=\d\)\)\@="
-      \ contained
-      \ nextgroup=stylusUnitInt,stylusUnitFloat
-      \ skipwhite
-
-" ===============================================
 " OPERATORS
 " ===============================================
 
@@ -283,6 +233,10 @@ syntax region stylusSelectorClass start="\." skip="\w-\@=" end="\w\(\W\|$\)\@="
       \ oneline
       \ skipwhite
 
+syntax match stylusSelectorClass "\.{\@="
+      \ contained
+      \ nextgroup=stylusInterpolationSelectors
+
 highlight def link stylusSelectorClass Identifier
 
 " CSS Id
@@ -292,6 +246,10 @@ syntax region stylusSelectorId start="#" skip="\w-\@=" end="\w\(\W\|$\)\@="
       \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
       \ oneline
       \ skipwhite
+
+syntax match stylusSelectorId "#{\@="
+      \ contained
+      \ nextgroup=stylusInterpolationSelectors
 
 highlight def link stylusSelectorId Identifier
 
@@ -349,19 +307,19 @@ syntax match stylusSelectorPseudo ":\(\(first\|last\|only\)-\(child\|of-type\)\)
 
 syntax match stylusSelectorPseudo ":not(.\{-})"
       \ contained
-      \ contains=stylusSelectorElement,stylusEnclosure
+      \ contains=stylusSelectorElement,stylusEnclosure,stylusInterpolationSelectors
       \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
       \ skipwhite
 
 syntax match stylusSelectorPseudo ":lang(.\{-})"
       \ contained
-      \ contains=stylusEnclosure
+      \ contains=stylusEnclosure,stylusInterpolationSelectors
       \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
       \ skipwhite
 
 syntax match stylusSelectorPseudo ":\(nth-last-\|nth-\)\(child\|of-type\)(.\{-})"
       \ contained
-      \ contains=stylusUnitInt,stylusEnclosure
+      \ contains=stylusUnitInt,stylusEnclosure,stylusInterpolationSelectors
       \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
       \ skipwhite
 
@@ -472,7 +430,7 @@ syntax match stylusFont "\<\(serif\|sans-serif\|monospace\)\>"
       \ skipwhite
 
 highlight def link stylusFont Directory
-[-+\.]\=\d
+
 " ===============================================
 " Explicitly point out that the word before assignment operator is a variable
 syntax match stylusVariable "\<\(\w\|-\|\$\)*\(\s\=[:?]\==[^=]\)\@="
@@ -498,6 +456,83 @@ syntax match stylusUnitName ")\@<=%"
       \ contained
       \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary
       \ skipwhite
+
+" ===============================================
+" INTERPOLATION
+" ===============================================
+
+" Prepend is always a property
+syntax match stylusProperty "\(\w\|-\)\+{\@="
+      \ contained
+      \ nextgroup=stylusInterpolationProperties
+
+syntax region stylusInterpolation matchgroup=stylusEnclosure start="{" end="}"
+      \ contained
+      \ contains=stylusVariable,stylusExplicitVariable,stylusOperatorUnary,stylusUnitInt,stylusUnitFloat,stylusParenthesised
+      \ keepend
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusInterpolationSelectorsTail,stylusInterpolationPropertiesTail
+      \ oneline
+      \ skipwhite
+
+syntax region stylusInterpolationSelectors matchgroup=stylusEnclosure start="{" end="}"
+      \ contained
+      \ contains=stylusVariable,stylusExplicitVariable,stylusOperatorUnary,stylusUnitInt,stylusUnitFloat,stylusParenthesised
+      \ keepend
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectorsTail
+      \ oneline
+      \ skipwhite
+
+syntax region stylusInterpolationProperties matchgroup=stylusEnclosure start="{" end="}"
+      \ contained
+      \ contains=stylusVariable,stylusExplicitVariable,stylusOperatorUnary,stylusUnitInt,stylusUnitFloat,stylusParenthesised
+      \ keepend
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusProperty,stylusInterpolationPropertiesTail
+      \ oneline
+      \ skipwhite
+
+syntax match stylusInterpolationPropertiesTail "}\@<=\(\w\|-\)\+"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusProperty,stylusInterpolationProperties
+      \ skipwhite
+
+highlight def link stylusInterpolationPropertiesTail Type
+
+" Tail is a selector by default
+syntax match stylusInterpolationSelectorsTail "}\@<=\(\w\|-\)\+"
+      \ contained
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
+      \ skipwhite
+
+highlight def link stylusInterpolationSelectorsTail Identifier
+
+" Tail is a property if followed by anything
+syntax match stylusInterpolationPropertiesTail "}\@<=\(\w\|-\)\+:\=\s\S\@="
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusProperty,stylusInterpolationProperties
+      \ skipwhite
+
+" Tail is a selector if followed by .#[]$~^&
+syntax match stylusInterpolationSelectorsTail "}\@<=\(\w\|-\)\+:\=\s[\.#\[~^&+|,>]\@="
+      \ contained
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
+      \ skipwhite
+
+" Tail is a property if followed by float number
+syntax match stylusInterpolationPropertiesTail "}\@<=\(\w\|-\)\+:\=\s\(\.\d\)\@="
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusProperty,stylusInterpolationProperties
+      \ skipwhite
+
+" Tail is a property if followed by hex color
+syntax match stylusInterpolationPropertiesTail "}\@<=\(\w\|-\)\+:\=\s\(#\x\{3,6}\)\@="
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusProperty,stylusInterpolationProperties
+      \ skipwhite
+
+execute 'syntax match stylusInterpolationSelectorsTail "}\@<=\(\w\|-\)\+:\=\s\(' . join(g:html_elements, '\|') . '\)\@="
+      \ contained
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
+      \ skipwhite'
 
 " ===============================================
 " STRINGS
