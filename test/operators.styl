@@ -303,3 +303,24 @@ body
   padding: (n * 5)px
   padding: unit(n + 5, '%')
   padding: unit(5 + 180 / 2, deg)
+
+$myvar = #0e0 + #0e0
+// => #0f0
+
+$myvar = #888 + 50%
+// => #c3c3c3
+
+$myvar = #888 - 50%
+// => #444
+
+$myvar = #f00 + 50deg
+// => #ffd500
+
+$myvar = #f00 - rgba(100,0,0,0.5)
+// => rgba(155,0,0,0.5)
+
+'X::Microsoft::Crap(%s)' % #fc0
+// => X::Microsoft::Crap(#fc0)
+
+'-webkit-gradient(%s, %s, %s)' % (linear (0 0) (0 100%))
+// => -webkit-gradient(linear, 0 0, 0 100%)
