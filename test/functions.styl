@@ -1,0 +1,155 @@
+add(a, b)
+  a + b
+
+body
+  padding add(10px, 5)
+
+body {
+  padding: 15px;
+}
+
+add(a, b = a)
+  a + b
+
+add(10, 5)
+// => 15
+
+add(10)
+// => 20
+
+add(a, b = unit(a, px))
+  a + b
+
+subtract(a, b)
+  a - b
+
+subtract(b: 10, a: 25)
+
+add(a, b = a)
+  a = unit(a, px)
+  b = unit(b, px)
+  a + b
+
+add(15%, 10deg)
+// => 25
+
+sizes = 15px 10px
+
+sizes[0]
+// => 15px
+
+sizes()
+  15px 10px
+
+sizes()[0]
+// => 15px
+
+swap(a, b)
+  b a
+
+swap(a, b)
+  (b a)
+
+swap(a, b)
+  return b a
+
+stringish(val)
+  if val is a 'string' or val is a 'ident'
+    yes
+  else
+    no
+
+stringish('yay') == yes
+// => true
+
+stringish(yay) == yes
+// => true
+
+stringish(0) == no
+// => true
+
+compare(a, b)
+  if a > b
+    higher
+  else if a < b
+    lower
+  else
+    equal
+
+compare(5, 2)
+// => higher
+
+compare(1, 5)
+// => lower
+
+compare(10, 10)
+// => equal
+
+plus = add
+
+plus(1, 2)
+// => 3
+
+add(a, b)
+  a + b
+
+sub(a, b)
+  a - b
+
+invoke(a, b, fn)
+  fn(a, b)
+
+body
+  padding invoke(5, 10, add)
+  padding invoke(5, 10, sub)
+
+body {
+  padding: 15;
+  padding: -5;
+}
+
+sort(list, fn = null)
+  // default sort function
+  if fn == null
+    fn = @(a, b) {
+      a > b
+    }
+
+  // bubble sort
+for $i in 1..length(list) - 1
+  for $j in 0..$i - 1
+    if fn(list[$j], list[$i])
+      $temp = list[$i]
+      list[$i] = list[$j]
+      list[$j] = $temp
+return list
+
+sort('e' 'c' 'f' 'a' 'b' 'd')
+// => 'a' 'b' 'c' 'd' 'e' 'f'
+
+sort(5 3 6 1 2 4, @(a, b){
+  a < b
+})
+// => 6 5 4 3 2 1
+
+sum()
+  n = 0
+  for num in arguments
+    n = n + num
+
+sum(1,2,3,4,5)
+// => 15
+
+get(hash, key)
+  return pair[1] if pair[0] == key for pair in hash
+
+hash = (one 1) (two 2) (three 3)
+
+get(hash, two)
+// => 2
+
+get(hash, three)
+// => 3
+
+get(hash, something)
+// => null

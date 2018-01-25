@@ -1,0 +1,107 @@
+border-radius(n)
+  -webkit-border-radius n
+  -moz-border-radius n
+  border-radius n
+
+form input[type=button]
+  border-radius(5px)
+
+form input[type=button] {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+border-radius(n)
+  -webkit-border-radius n
+  -moz-border-radius n
+  border-radius n
+
+form input[type=button]
+  border-radius 5px
+
+border-radius()
+  -webkit-border-radius arguments
+  -moz-border-radius arguments
+  border-radius arguments
+
+support-for-ie ?= true
+
+opacity(n)
+  opacity n
+  if support-for-ie
+    filter unquote('progid:DXImageTransform.Microsoft.Alpha(Opacity=' + round(n * 100) + ')')
+
+#logo
+  &:hover
+    opacity 0.5
+
+#logo:hover {
+  opacity: 0.5;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+}
+
+stripe(even = #fff, odd = #eee)
+  tr
+    background-color odd
+    &.even
+    &:nth-child(even)
+      background-color even
+      &:not(a)
+
+table
+  stripe()
+  td
+    padding 4px 10px
+
+table#users
+  stripe(#303030, #494848)
+  td
+    color white
+
+stripe(even = #fff, odd = #eee)
+  tr
+    background-color odd
+  tr.even
+  tr:nth-child(even)
+    background-color even
+
++foo()
+  width: 10px
+
+foo()
+  .bar
+    {block}
+
++foo()
+  width: 10px
+  display: block
+
+.bar {
+  width: 10px;
+}
+
+inline-list()
+  li
+    display inline
+
+comma-list()
+  inline-list()
+  li
+    &:after
+      content ', '
+    &:last-child:after
+      content ''
+
+ul
+  comma-list()
+
+ul li:after {
+  content: ", ";
+}
+ul li:last-child:after {
+  content: "";
+}
+ul li {
+  display: inline;
+}
