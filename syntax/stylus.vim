@@ -167,7 +167,7 @@ highlight def link stylusConditional Conditional
 " SPRINTF
 " ===============================================
 
-syntax match stylusSprintfPlaceholder "%s\(.\{-}\s%\s\)\@="
+syntax match stylusSprintfPlaceholder "%s"
       \ contained
 
 highlight def link stylusSprintfPlaceholder Operator
@@ -200,6 +200,11 @@ syntax match stylusUnitInt "[-+]\=\d\+%\="
       \ nextgroup=stylusOperatorRange,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
       \ skipwhite
 
+syntax match stylusUnitInt "\<PI\>"
+      \ contained
+      \ nextgroup=stylusOperatorRange,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
+      \ skipwhite
+
 highlight def link stylusUnitInt Number
 
 syntax match stylusUnitFloat "[-+]\=\d\=\.\d\+%\="
@@ -219,7 +224,7 @@ highlight def link stylusUnitName Number
 " Resolve 'in' unit name and operator conflict
 syntax match stylusOperatorExistence "\s\@<=\<in\>"
       \ contained
-      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName
       \ skipwhite
 
 " ===============================================
@@ -248,7 +253,7 @@ execute 'syn match stylusSelectorElement "\<\(' . join(g:html_elements, '\|') . 
 highlight def link stylusSelectorElement Statement
 
 " CSS Class
-syntax region stylusSelectorClass start="\." skip="\w-\@=" end="\w\(\W\|$\)\@="
+syntax region stylusSelectorClass start="\." skip="\w-\@=" end="\(\w\|-\)\(\W\|$\)\@="
       \ contained
       \ keepend
       \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
@@ -262,7 +267,7 @@ syntax match stylusSelectorClass "\.{\@="
 highlight def link stylusSelectorClass Identifier
 
 " CSS Id
-syntax region stylusSelectorId start="#" skip="\w-\@=" end="\w\(\W\|$\)\@="
+syntax region stylusSelectorId start="#" skip="\w-\@=" end="\(\w\|-\)\(\W\|$\)\@="
       \ contained
       \ keepend
       \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
@@ -588,7 +593,7 @@ highlight def link stylusFunctionName Function
 
 syntax region stylusFunctionProps matchgroup=stylusEnclosure start="(" end=")"
       \ contained
-      \ contains=stylusOperatorUnary,stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor
+      \ contains=stylusOperatorUnary,stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusFunctionName
       \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusSubscript,stylusConditional,stylusOperatorRelational
       \ skipwhite
 

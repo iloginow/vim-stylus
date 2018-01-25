@@ -1,0 +1,777 @@
+red(#c00)
+// => 204
+
+red(#000, 255)
+// => #f00
+
+green(#0c0)
+// => 204
+
+green(#000, 255)
+// => #0f0
+
+blue(#00c)
+// => 204
+
+blue(#000, 255)
+// => #00f
+
+alpha(#fff)
+// => 1
+
+alpha(rgba(0,0,0,0.3))
+// => 0.3
+
+alpha(#fff, 0.5)
+// => rgba(255,255,255,0.5)
+
+dark(black)
+// => true
+
+dark(#005716)
+// => true
+
+dark(white)
+// => false
+
+light(black)
+// => false
+
+light(white)
+// => true
+
+light(#00FF40)
+// => true
+
+hue(hsl(50deg, 100%, 80%))
+// => 50deg
+
+hue(#00c, 90deg)
+// => #6c0
+
+saturation(hsl(50deg, 100%, 80%))
+// => 100%
+
+saturation(#00c, 50%)
+// => #339
+
+lightness(hsl(50deg, 100%, 80%))
+// => 80%
+
+lightness(#00c, 80%)
+// => #99f
+
+nums = 1 2
+push(nums, 3, 4, 5)
+
+nums
+// => 1 2 3 4 5
+
+nums = 4 5 3 2 1
+num = pop(nums)
+
+nums
+// => 4 5 3 2
+num
+// => 1
+
+nums = 4 5 3 2 1
+num = shift(nums)
+
+nums
+// => 5 3 2 1
+num
+// => 4
+
+nums = 4 5
+unshift(nums, 3, 2, 1)
+
+nums
+// => 1 2 3 4 5
+
+list = 1 2 3
+
+index(list, 2)
+// => 1
+
+index(1px solid red, red)
+// => 2
+
+pairs = (one 1) (two 2) (three 3)
+keys(pairs)
+// => one two three
+
+pairs = (one 1) (two 2) (three 3)
+values(pairs)
+// => 1 2 3
+
+list1 = a b c
+list-separator(list1)
+// => ' '
+
+list2 = a, b, c
+list-separator(list2)
+// => ','
+
+type(12)
+// => 'unit'
+
+typeof(12)
+// => 'unit'
+
+typeof(#fff)
+// => 'rgba'
+
+type-of(#fff)
+// => 'rgba'
+
+unit(10)
+// => ''
+
+unit(15in)
+// => 'in'
+
+unit(15%, 'px')
+// => 15px
+
+unit(15%, px)
+// => 15px
+
+percentage(.5)
+// => 50%
+
+percentage(4 / 100)
+// => 4%
+
+abs(-5px)
+// => 5px
+
+abs(5px)
+// => 5px
+
+ceil(5.5in)
+// => 6in
+
+floor(5.6px)
+// => 5px
+
+round(5.5px)
+// => 6px
+
+round(5.4px)
+// => 5px
+
+ceil(5.52px,1)
+// => 5.6px
+
+floor(5.57px,1)
+// => 5.5px
+
+round(5.52px,1)
+// => 5.5px
+
+sin(30deg)
+// => 0.5
+
+sin(3*PI/4)
+// => 0.707106781
+
+cos(180deg)
+// => -1
+
+tan(45deg)
+// => 1
+
+tan(90deg)
+// => Infinity
+
+min(1, 5)
+// => 1
+
+max(1, 5)
+// => 5
+
+even(6px)
+// => true
+
+odd(5mm)
+// => true
+
+sum(1 2 3)
+// => 6
+
+avg(1 2 3)
+// => 2
+
+range(1, 6)
+// equals to `1..6`
+// 1 2 3 4 5 6
+
+range(1, 6, 2)
+// 1 3 5
+
+range(-6, -1, 2)
+// -6 -4 -2
+
+range(1px, 3px, 0.5px)
+// 1px 1.5px 2px 2.5px 3px
+
+for i in range(10px, 50px, 10)
+  .col-{i}
+    width: i
+
+.col-10 {
+  width: 10px;
+}
+.col-20 {
+  width: 20px;
+}
+.col-30 {
+  width: 30px;
+}
+.col-40 {
+  width: 40px;
+}
+.col-50 {
+  width: 50px;
+}
+
+base-convert(1, 10, 3)
+// => 001
+
+base-convert(14, 16, 1)
+// => e
+
+base-convert(42, 2)
+// => 101010
+
+match('^(height|width)?([<>=]{1,})(.*)', 'height>=1024px')
+// => 'height>=1024px' 'height' '>=' '1024px'
+
+match('^foo(?:bar)?', 'foo')
+// => 'foo'
+
+match('^foo(?:bar)?', 'foobar')
+// => 'foobar'
+
+match('^foo(?:bar)?', 'bar')
+// => null
+
+match('ain', 'The rain in SPAIN stays mainly in the plain')
+// => 'ain'
+
+match('ain', 'The rain in SPAIN stays mainly in the plain', g)
+// => 'ain' 'ain' 'ain'
+
+match('ain', 'The rain in SPAIN stays mainly in the plain', 'gi')
+// => 'ain' 'AIN' 'ain' 'ain'
+
+replace(i, e, 'griin')
+// => 'green'
+
+replace(i, e, griin)
+// => #008000
+
+join(' ', 1 2 3)
+// => "1 2 3"
+
+join(',', 1 2 3)
+// => "1,2,3"
+
+join(', ', foo bar baz)
+// => "foo, bar, baz"
+
+join(', ', foo, bar, baz)
+// => "foo, bar, baz"
+
+join(', ', 1 2, 3 4, 5 6)
+// => "1 2, 3 4, 5 6"
+
+split(_, bar1_bar2_bar3)
+// => bar1 bar2 bar3
+
+split(_, 'bar1_bar2_bar3')
+// => 'bar1' 'bar2' 'bar3'
+
+substr(ident, 1, 2)
+// => de
+
+substr('string', 1, 2)
+// => 'tr'
+
+val = dredd
+substr(substr(val, 1), 0, 3)
+// => #f00
+
+slice('lorem' 'ipsum' 'dolor', 1, 2) slice('lorem' 'ipsum' 'dolor', 1, -1) // => ‘ipsum’
+
+slice('lorem ipsum', 1, 5) // => 'orem' slice(rredd, 1, -1) // => #f00
+
+slice(1px solid black, 1) // => solid #000
+
+hsla(10deg, 50%, 30%, 0.5)
+// => HSLA
+
+hsla(#ffcc00)
+// => HSLA
+
+hsl(10, 50, 30)
+// => HSLA
+
+hsl(#ffcc00)
+// => HSLA
+
+rgba(255,0,0,0.5)
+// => rgba(255,0,0,0.5)
+
+rgba(255,0,0,1)
+// => #ff0000
+
+rgba(#ffcc00, 0.5)
+// rgba(255,204,0,0.5)
+
+$myvar = #fc08
+// => rgba(255,204,0,0.5)
+
+$myvar = #ffcc00ee
+// => rgba(255,204,0,0.9)
+
+rgb(255,204,0)
+// => #ffcc00
+
+rgb(#fff)
+// => #fff
+
+blend(rgba(#FFF, 0.5), #000)
+// => #808080
+
+blend(rgba(#FFDE00,.42), #19C261)
+// => #7ace38
+
+blend(rgba(lime, 0.5), rgba(red, 0.25))
+// => rgba(128,128,0,0.625)
+
+lighten(#2c2c2c, 30)
+// => #787878
+
+lighten(#2c2c2c, 30%)
+// => #393939
+
+darken(#D62828, 30)
+// => #551010
+
+darken(#D62828, 30%)
+// => #961c1c
+
+desaturate(#f00, 40%)
+// => #c33
+
+saturate(#c33, 40%)
+// => #f00
+
+complement(#fd0cc7)
+// => #0cfd42
+
+invert(#d62828)
+// => #29d7d7
+
+spin(#ff0000, 90deg)
+// => #80ff00
+
+grayscale(#fd0cc7)
+// => #0cfd42
+
+mix(#000, #fff, 30%)
+// => #b2b2b2
+
+tint(#fd0cc7,66%)
+// => #feaceb
+
+shade(#fd0cc7,66%)
+// => #560443
+
+luminosity(white)
+// => 1
+
+luminosity(#000)
+// => 0
+
+luminosity(red)
+// => 0.2126
+
+contrast(#000, #fff).ratio
+// => 21
+contrast(#000, rgba(#FFF, 0.5))
+// => { "ratio": "13.15;", "error": "-7.85", "min": "5.3", "max": "21" }
+
+transparentify(#808080)
+// => rgba(0,0,0,0.5)
+
+transparentify(#414141, #000)
+// => rgba(255,255,255,0.25)
+
+transparentify(#91974C, #F34949, 0.5)
+// => rgba(47,229,79,0.5)
+
+unquote("sans-serif")
+// => sans-serif
+
+unquote(sans-serif)
+// => sans-serif
+
+unquote('1px / 2px')
+// => 1px / 2px
+
+unit = convert('40px')
+typeof(unit)
+// => 'unit'
+
+color = convert('#fff')
+typeof(color)
+// => 'rgba'
+
+foo = convert('foo')
+typeof(foo)
+// => 'ident'
+
+s('bar()');
+// => bar()
+
+s('bar(%s)', 'baz');
+// => bar("baz")
+
+s('bar(%s)', baz);
+// => bar(baz)
+
+s('bar(%s)', 15px);
+// => bar(15px)
+
+s('rgba(%s, %s, %s, 0.5)', 255, 100, 50);
+// => rgba(255, 100, 50, 0.5)
+
+s('bar(%Z)', 15px);
+// => bar(%Z)
+
+s('bar(%s, %s)', 15px);
+// => bar(15px, null)
+
+basename('images/foo.png')
+// => "foo.png"
+
+basename('images/foo.png', '.png')
+// => "foo"
+
+dirname('images/foo.png')
+// => "images"
+
+extname('images/foo.png')
+// => ".png"
+
+pathjoin('images', 'foo.png')
+// => "images/foo.png"
+
+path = 'images/foo.png'
+ext = extname(path)
+pathjoin(dirname(path), basename(path, ext) + _thumb + ext)
+// => 'images/foo_thumb.png'
+
+foo()
+  bar()
+
+bar()
+  baz()
+
+baz()
+  return called-from
+
+foo()
+// => bar foo
+
+@media only screen and (min-width: 1024px)
+  current-media()
+// => '@media (only screen and (min-width: (1024px)))'
+
+size($width, $height = $width)
+  +cache('w' + $width)
+    width: $width
+  +cache('h' + $height)
+    height: $height
+
+.a
+  size: 10px 20px
+.b
+  size: 10px 2em
+.c
+  size: 1px 2em
+
+.a,
+.b {
+  width: 10px;
+}
+.a {
+  height: 20px;
+}
+.b,
+.c {
+  height: 2em;
+}
+.c {
+  width: 1px;
+}
+
++prefix-classes('foo-')
+  .bar
+    width: 10px
+
+.foo-bar {
+  width: 10px;
+}
+
+font-size-1 = 10px
+font-size-2 = 20px
+font-size-3 = 30px
+
+for i in 1..3
+  .text-{i}
+    font-size: lookup('font-size-' + i)
+
+.text-1 {
+  font-size: 10px;
+}
+.text-2 {
+  font-size: 20px;
+}
+.text-3 {
+  font-size: 30px;
+}
+
+prefix = 'border'
+border = { color: #000, length: 1px, style: solid }
+
+for prop, val in border
+  define(prefix + '-' + prop, val)
+
+body
+  border: border-length border-style border-color
+
+body {
+  border: 1px solid #000;
+}
+
+op = '+'
+operate(op, 15, 5)
+// => 20
+
+length((1 2 3 4))
+// => 4
+
+length((1 2))
+// => 2
+
+length((1))
+// => 1
+
+length(())
+// => 0
+
+length(1 2 3)
+// => 3
+
+length(1)
+// => 1
+
+length()
+// => 0
+
+.foo
+  selector()
+// => '.foo'
+
+.foo
+  &:hover
+    selector()
+// '.foo:hover'
+
+.foo
+  color red
+
+  a
+    font-size 12px
+
+selector-exists('.foo') // true
+selector-exists('.foo a') // true
+selector-exists('.foo li') // false
+selector-exists('.bar') // false
+
+.foo
+  color red
+
+  a
+    font-size 12px
+
+  selector-exists('a') // false
+  selector-exists(selector() + ' a') // true
+
+warn("oh noes!")
+
+add(a, b)
+  unless a is a 'unit' and b is a 'unit'
+    error('add() expects units')
+  a + b
+
+nums = 1 2 3
+last(nums)
+last(1 2 3)
+// => 3
+
+list = (one 1) (two 2) (three 3)
+last(list)
+// => (three 3)
+
+fonts = Arial, sans-serif
+p('test')
+p(123)
+p((1 2 3))
+p(fonts)
+p(#fff)
+p(rgba(0,0,0,0.2))
+
+add(a, b)
+  a + b
+
+p(add)
+
+opposite-position(right)
+// => left
+
+opposite-position(top left)
+// => bottom right
+
+opposite-position('top' 'left')
+// => bottom right
+
+width(img)
+  return image-size(img)[0]
+
+height(img)
+  return image-size(img)[1]
+
+image-size('tux.png')
+// => 405px 250px
+
+image-size('tux.png')[0] == width('tux.png')
+// => true
+
+.test
+  background: embedurl('logo.png')
+// => background: url("data:image/png;base64,…")
+.test
+  background: embedurl('logo.svg', 'utf8')
+// => background: url("data:image/svg+xml;charset=utf-8,…")
+
+something()
+  add-property('bar', 1 2 3)
+  s('bar')
+
+body
+  foo: something()
+
+body {
+  bar: 1 2 3;
+  foo: bar;
+}
+
+p(current-property)
+// => "foo" (foo __CALL__ bar baz)
+
+p(current-property[0])
+// => "foo"
+
+p(current-property[1])
+// => foo __CALL__ bar baz
+
+something(n)
+  if current-property
+    add-property(current-property[0], s('-webkit-something(%s)', n))
+    add-property(current-property[0], s('-moz-something(%s)', n))
+    s('something(%s)', n)
+  else
+    error('something() must be used within a property')
+
+body {
+  foo: something(15px) bar;
+}
+
+body {
+  foo: -webkit-something(15px);
+  foo: -moz-something(15px);
+  foo: something(15px) bar;
+}
+
+replace(expr, str, val)
+  expr = clone(expr)
+  for e, i in expr
+    if str == e
+      expr[i] = val
+  expr
+
+something(n)
+  if current-property
+    val = current-property[1]
+    webkit = replace(val, '__CALL__', s('-webkit-something(%s)', n))
+    moz = replace(val, '__CALL__', s('-moz-something(%s)', n))
+    add-property(current-property[0], webkit)
+    add-property(current-property[0], moz)
+    s('something(%s)', n)
+  else
+    error('something() must be used within a property')
+
+body
+  foo: something(5px) bar baz
+
+body {
+  foo: -webkit-something(5px) bar baz;
+  foo: -moz-something(5px) bar baz;
+  foo: something(5px) bar baz;
+}
+
+{
+    "small": "screen and (max-width:400px)",
+    "tablet": {
+        "landscape": "screen and (min-width:600px) and (orientation:landscape)",
+        "portrait": "screen and (min-width:600px) and (orientation:portrait)"
+    }
+}
+
+json('media-queries.json')
+
+@media small
+// => @media screen and (max-width:400px)
+
+@media tablet-landscape
+// => @media screen and (min-width:600px) and (orientation:landscape)
+
+vars = json('vars.json', { hash: true })
+body
+  width: vars.width
+
+vars = json('vars.json', { hash: true, leave-strings: true })
+typeof(vars.icon)
+// => 'string'
+
+// don't throw an error if the JSON file doesn't exist
+optional = json('optional.json', { hash: true, optional: true })
+typeof(optional)
+// => 'null'
+
+use("plugins/add.js")
+
+.test
+  width add(10, 100)
+// => width: 110
+
+stop(pos, rgba)
+  rgba-stop(pos, rgba)
+
+stop(50%, orange)
+// => rgba-stop(50%, #ffa500)
