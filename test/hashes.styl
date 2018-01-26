@@ -1,0 +1,109 @@
+foo = {
+  bar: baz,
+  baz: raz
+}
+
+foo = {
+  bar: baz,
+  'baz': raz,
+  '0': raz
+}
+
+foo = {}
+foo['bar'] = baz
+foo['baz'] = raz
+
+foo = {}
+bar = 'baz'
+foo[bar] = raz
+
+$foo.baz
+// => raz
+
+foo = { bar: "baz" }
+
+foo.bar
+// => "baz"
+
+foo = { "%": 10 }
+baz = "%"
+
+foo[baz]
+// => 10
+
+foo = {
+  bar: {
+    baz: {
+      raz: 10px
+    }
+  }
+}
+
+qux = "raz"
+foo["bar"].baz[qux]
+// => 10px
+
+foo = {
+  width: 10px,
+  height: 20px,
+  '&:hover': {
+    padding: 0
+
+  }
+}
+
+.bar
+  {foo}
+
+// => .bar {
+//      width: 10px;
+//      height: 20px;
+//    }
+//    .bar:hover {
+//      padding: 0;
+//    }
+
+foo = { bar: 'a', baz: 'b' }
+
+length(foo)
+// => 2
+
+foo = { width: 10px, height: 20px }
+
+for key, value in foo
+  {key}: value
+
+// => width: 10px;
+//    height: 20px;
+
+foo = { bar: 10px}
+
+bar in foo
+// => true
+
+baz in foo
+// => false
+
+foo = { bar: 'a', baz: 'b' }
+
+keys(foo)
+// => 'bar' 'baz'
+
+values(foo)
+// => 'a' 'b'
+
+obj = { foo: 1, bar: 2 }
+remove(obj, 'foo')
+// => {"bar":"(2)"}
+
+obj = {
+  foo: 'foo'
+  bar: 'bar'
+}
+
+obj2 = {
+  baz: 'baz'
+}
+
+merge(obj, obj2)
+// => {"foo":"('foo')","bar":"('bar')","baz":"('baz')"}
