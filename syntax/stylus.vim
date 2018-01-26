@@ -579,6 +579,11 @@ syntax match stylusFunctionBlock "+"
 
 highlight def link stylusFunctionBlock Operator
 
+syntax match stylusFunctionRest "\w\@<=\.\.\."
+      \ contained
+
+highlight def link stylusFunctionRest Operator
+
 syntax match stylusFunctionName "\(\<\|+\)\(\w\|-\|?\)\{-}(\@="
       \ contained
       \ contains=stylusFunctionBlock
@@ -593,7 +598,7 @@ highlight def link stylusFunctionName Function
 
 syntax region stylusFunctionProps matchgroup=stylusEnclosure start="(" end=")"
       \ contained
-      \ contains=stylusOperatorUnary,stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusFunctionName
+      \ contains=stylusOperatorUnary,stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusFunctionName,stylusFunctionRest
       \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusSubscript,stylusConditional,stylusOperatorRelational
       \ skipwhite
 

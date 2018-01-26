@@ -1,0 +1,57 @@
+box-shadow(args...)
+  -webkit-box-shadow args
+  -moz-box-shadow args
+  box-shadow args
+
+#login
+  box-shadow 1px 2px 5px #eee
+
+#login {
+  -webkit-box-shadow: 1px 2px 5px #eee;
+  -moz-box-shadow: 1px 2px 5px #eee;
+  box-shadow: 1px 2px 5px #eee;
+}
+
+box-shadow(offset-x, args...)
+  got-offset-x offset-x
+  -webkit-box-shadow offset-x args
+  -moz-box-shadow offset-x args
+  box-shadow offset-x args
+
+#login
+  box-shadow 1px 2px 5px #eee
+
+#login {
+  got-offset-x: 1px;
+  -webkit-box-shadow: 1px 2px 5px #eee;
+  -moz-box-shadow: 1px 2px 5px #eee;
+  box-shadow: 1px 2px 5px #eee;
+}
+
+box-shadow(args...)
+  -webkit-box-shadow args
+  -moz-box-shadow args
+  box-shadow args
+
+#login
+  box-shadow #ddd 1px 1px, #eee 2px 2px
+
+#login {
+  -webkit-box-shadow: #ddd 1px 1px #eee 2px 2px;
+  -moz-box-shadow: #ddd 1px 1px #eee 2px 2px;
+  box-shadow: #ddd 1px 1px #eee 2px 2px;
+}
+
+box-shadow()
+  -webkit-box-shadow arguments
+  -moz-box-shadow arguments
+  box-shadow arguments
+
+body
+  box-shadow #ddd 1px 1px, #eee 2px 2px
+
+body {
+  -webkit-box-shadow: #ddd 1px 1px, #eee 2px 2px;
+  -moz-box-shadow: #ddd 1px 1px, #eee 2px 2px;
+  box-shadow: #ddd 1px 1px, #eee 2px 2px;
+}
