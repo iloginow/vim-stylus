@@ -598,7 +598,7 @@ highlight def link stylusFunctionName Function
 
 syntax region stylusFunctionProps matchgroup=stylusEnclosure start="(" end=")"
       \ contained
-      \ contains=stylusOperatorUnary,stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusFunctionName,stylusFunctionRest
+      \ contains=stylusOperatorUnary,stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusFunctionName,stylusFunctionRest,stylusValues
       \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusComma,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusSubscript,stylusConditional,stylusOperatorRelational
       \ skipwhite
 

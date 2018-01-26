@@ -1,0 +1,69 @@
+$overload-padding = true
+
+if $overload-padding
+  padding($y, $x)
+    margin $y $x
+
+body
+  padding 5px 10px
+
+box($x, $y, $margin = false)
+  padding $y $x
+  if $margin
+    margin $y $x
+
+body
+  box(5px, 10px, true)
+
+box($x, $y, $margin-only = false)
+  if $margin-only
+    margin $y $x
+  else
+    padding $y $x
+
+$disable-padding-override = true
+
+unless $disable-padding-override is defined and $disable-padding-override
+  padding($x, $y)
+    margin $y $x
+
+body
+  padding 5px 10px
+
+negative($n)
+  unless $n is a 'unit'
+    error('invalid number')
+  if $n < 0
+    yes
+  else
+    no
+
+negative(n)
+  error('invalid number') unless $n is a 'unit'
+  return yes if $n < 0
+  no
+
+pad($types = margin padding, $n = 5px)
+  padding unit($n, px) if padding in $types
+  margin unit($n, px) if margin in $types
+
+body
+  pad()
+
+body
+  pad($margin)
+
+body
+  $apply-mixins = true
+  pad(padding, 10) if $apply-mixins
+
+body {
+  padding: 5px;
+  margin: 5px;
+}
+body {
+  margin: 5px;
+}
+body {
+  padding: 10px;
+}
