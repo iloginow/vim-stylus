@@ -85,7 +85,7 @@ syntax match stylusOperatorTernary "[:?]"
 highlight def link stylusOperatorTernary Operator
 
 " Assignment
-syntax match stylusOperatorAssignment "[:?]\=="
+syntax match stylusOperatorAssignment "[/\*+-:?]\=="
       \ contained
       \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName,stylusHash
       \ skipwhite
@@ -476,24 +476,6 @@ syntax match stylusImportant "!important"
 highlight def link stylusImportant Special
 
 " ===============================================
-" PARENTHESISED EXPRESSIONS
-" ===============================================
-
-syntax region stylusParenthesised matchgroup=stylusEnclosure start="[^\w\s]\@<=(" skip=/["'].\{-}["']/ end=")"
-      \ contained
-      \ contains=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionProps,stylusFunctionName,stylusConditional
-      \ keepend
-      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
-      \ oneline
-      \ skipwhite
-
-" Resolve '%' unit name and operator conflict
-syntax match stylusUnitName ")\@<=%"
-      \ contained
-      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
-      \ skipwhite
-
-" ===============================================
 " INTERPOLATION
 " ===============================================
 
@@ -584,7 +566,7 @@ syntax match stylusFunctionRest "\w\@<=\.\.\."
 
 highlight def link stylusFunctionRest Operator
 
-syntax match stylusFunctionName "\(\<\|+\)\(\w\|-\|?\)\{-}(\@="
+syntax match stylusFunctionName "\(\<\|+\)\(\w\|\$\)\(-\|\w\|\$\)\{-}(\@="
       \ contained
       \ contains=stylusFunctionBlock
       \ nextgroup=stylusFunctionProps
@@ -596,12 +578,30 @@ syntax match stylusFunctionName "@\{-}(\@="
 
 highlight def link stylusFunctionName Function
 
-syntax region stylusFunctionProps matchgroup=stylusEnclosure start="(" end=")"
+syntax region stylusFunctionProps matchgroup=stylusEnclosure start="\S\@<=(" end=")"
       \ contained
       \ contains=stylusOperatorUnary,stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusFunctionName,stylusFunctionRest,stylusValues
       \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusSubscript,stylusConditional,stylusOperatorRelational
       \ skipwhite
 
+
+" ===============================================
+" PARENTHESISED EXPRESSIONS
+" ===============================================
+
+syntax region stylusParenthesised matchgroup=stylusEnclosure start="[^\w]\@<=(" skip=/["'].\{-}["']/ end=")"
+      \ contained
+      \ contains=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
+      \ keepend
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
+      \ oneline
+      \ skipwhite
+
+" Resolve '%' unit name and operator conflict
+syntax match stylusUnitName ")\@<=%"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
+      \ skipwhite
 " ===============================================
 " STRINGS
 " ===============================================
