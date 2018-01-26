@@ -1,0 +1,210 @@
+@import "reset.css"
+@import "reset.css"
+
+.bar
+  width: 10px;
+
+.foo
+  @import 'bar.styl'
+
+@media screen and (min-width: 640px)
+  @import 'bar.styl'
+
+.foo .bar {
+  width: 10px;
+}
+@media screen and (min-width: 640px) {
+  .bar {
+    width: 10px;
+  }
+}
+
+@import 'product/*'
+
+@require 'head'
+@require 'body'
+@require 'foot'
+
+@import 'mixins/vendor'
+
+@media print
+  #header
+  #footer
+    display none
+
+@media print {
+  #header,
+  #footer {
+    display: none;
+  }
+}
+
+.widget
+  padding 10px
+
+  @media screen and (min-width: 600px)
+    padding 20px
+
+.widget {
+  padding: 10px;
+}
+
+@media screen and (min-width: 600px) {
+  .widget {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 500px)
+  .foo
+    color: #000
+
+  @media (min-width: 100px), (min-height: 200px)
+    .foo
+      color: #100
+
+@media (max-width: 500px) {
+  .foo {
+    color: #000;
+  }
+}
+@media (max-width: 500px) and (min-width: 100px), (max-width: 500px) and (min-height: 200px) {
+  .foo {
+    color: #100;
+  }
+}
+
+foo = 'width'
+bar = 30em
+@media (max-{foo}: bar)
+  body
+    color #fff
+
+@media (max-width: 30em) {
+  body {
+    color: #fff;
+  }
+}
+
+.foo
+  for i in 1..4
+    @media (min-width: 2**(i+7)px)
+      width: 100px*i
+
+@media (min-width: 256px) {
+  .foo {
+    width: 100px;
+  }
+}
+@media (min-width: 512px) {
+  .foo {
+    width: 200px;
+  }
+}
+@media (min-width: 1024px) {
+  .foo {
+    width: 300px;
+  }
+}
+@media (min-width: 2048px) {
+  .foo {
+    width: 400px;
+  }
+}
+
+@font-face
+  font-family Geo
+  font-style normal
+  src url('fonts/geo_sans_light/GensansLight.ttf')
+
+.ingeo
+  font-family Geo
+
+$keyframe-name = pulse
+@keyframes {$keyframe-name}
+  for i in 0..10
+    {10% * i}
+      opacity (i/10)
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.2;
+  }
+  40% {
+    opacity: 0.4;
+  }
+  60% {
+    opacity: 0.6;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes foo {
+  from {
+    color: black
+  }
+  to {
+    color: white
+  }
+}
+
+@-moz-keyframes foo {
+  from {
+    color: #000;
+  }
+  to {
+    color: #fff;
+  }
+}
+@-webkit-keyframes foo {
+  from {
+    color: #000;
+  }
+  to {
+    color: #fff;
+  }
+}
+@-o-keyframes foo {
+  from {
+    color: #000;
+  }
+  to {
+    color: #fff;
+  }
+}
+@keyframes foo {
+  from {
+    color: #000;
+  }
+  to {
+    color: #fff;
+  }
+}
+
+vendors = official
+
+@keyframes foo {
+  from {
+    color: black
+  }
+  to {
+    color: white
+  }
+}
+
+@keyframes foo {
+  from {
+    color: #000;
+  }
+  to {
+    color: #fff;
+  }
+}

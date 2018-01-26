@@ -182,6 +182,7 @@ let g:css_props = [
       \'quotes',
       \'resize',
       \'right',
+      \'src',
       \'tab-size',
       \'table-layout',
       \'text-align',

@@ -14,10 +14,10 @@ syntax case ignore
 
 " First of all define indented and not indented lines
 syntax match stylusNewLine "^\S\@="
-      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusVariable,stylusExplicitVariable,stylusInterpolationSelectors,stylusFunctionName,stylusConditional,stylusOperatorReturn
+      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusVariable,stylusExplicitVariable,stylusInterpolationSelectors,stylusFunctionName,stylusConditional,stylusOperatorReturn,stylusAtRuleMedia
 
 syntax match stylusNewLineIndented "^\s\+"
-      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusProperty,stylusVariable,stylusExplicitVariable,stylusInterpolation,stylusFunctionName,stylusUnitInt,stylusParenthesised,stylusOperatorReturn,stylusConditional
+      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusProperty,stylusVariable,stylusExplicitVariable,stylusInterpolation,stylusFunctionName,stylusUnitInt,stylusParenthesised,stylusOperatorReturn,stylusConditional,stylusAtRuleMedia
 
 " ===============================================
 " ENCLOSURES
@@ -141,7 +141,7 @@ highlight def link stylusOperatorReturn Operator
 
 " Comma
 syntax match stylusComma /,\(\s\=\(\a\w\{-}:\|\('\|"\).\{-}\('\|"\):\)\)\@!/
-      \ containedin=ALLBUT,stylusString,stylusComment,stylusHash
+      \ containedin=ALLBUT,stylusString,stylusComment,stylusHash,stylusAtRuleMediaComma
       \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName
       \ skipwhite
 
@@ -589,7 +589,7 @@ syntax region stylusFunctionProps matchgroup=stylusEnclosure start="\S\@<=(" end
 " PARENTHESISED EXPRESSIONS
 " ===============================================
 
-syntax region stylusParenthesised matchgroup=stylusEnclosure start="[^\w]\@<=(" skip=/["'].\{-}["']/ end=")"
+syntax region stylusParenthesised matchgroup=stylusEnclosure start="\W\@<=(" skip=/["'].\{-}["']/ end=")"
       \ contained
       \ contains=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
       \ keepend
@@ -659,6 +659,68 @@ syntax region stylusHash matchgroup=stylusEnclosure start="{" end="}"
       \ contains=stylusHashKey,stylusHashStringKey,stylusHash,stylusHashComma
       \ skipwhite
 
+" ===============================================
+" @ RULES
+" ===============================================
+
+syntax match stylusAtRuleImport "@\(import\|require\)\>"
+      \ containedin=ALLBUT,stylusString,stylusComment
+
+highlight def link stylusAtRuleImport Macro
+
+syntax match stylusAtRuleMedia "@media\>"
+      \ contained
+      \ nextgroup=stylusAtRuleMediaType,stylusAtRuleMediaFeatureExpression
+      \ skipwhite
+
+highlight def link stylusAtRuleMedia Macro
+
+syntax match stylusAtRuleMediaType "\<\(all\|print\|screen\|speech\)\>"
+      \ contained
+      \ nextgroup=stylusAtRuleMediaType,stylusAtRuleMediaFeatureExpression,stylusAtRuleMediaLogical
+      \ skipwhite
+
+highlight def link stylusAtRuleMediaType Macro
+
+syntax match stylusAtRuleMediaLogical "\<\(and\|not\|only\)\>"
+      \ contained
+      \ nextgroup=stylusAtRuleMediaType,stylusAtRuleMediaFeatureExpression,stylusAtRuleMediaLogical
+      \ skipwhite
+
+highlight def link stylusAtRuleMediaLogical Operator
+
+syntax region stylusAtRuleMediaFeatureExpression matchgroup=stylusEnclosure start="(" end=")"
+      \ contained
+      \ contains=stylusAtRuleMediaFeature,stylusInterpolationProperties,stylusInterpolationPropertiesTail
+      \ nextgroup=stylusAtRuleMediaComma,stylusAtRuleMediaLogical
+      \ oneline
+      \ skipwhite
+
+execute 'syntax match stylusAtRuleMediaFeature "\(min-\|max-\)\=\(' . join(g:css_media_features, '\|') . '\)\>:"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusInterpolationProperties,stylusFunctionName
+      \ skipwhite'
+
+syntax match stylusAtRuleMediaFeature "\(\w\|-\)\+{\@="
+      \ contained
+      \ nextgroup=stylusInterpolationProperties
+
+syntax match stylusAtRuleMediaFeature "}\@<=:"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusInterpolationProperties,stylusFunctionName
+      \ skipwhite
+
+highlight def link stylusAtRuleMediaFeature Type
+
+syntax match stylusAtRuleMediaComma ","
+      \ contained
+      \ nextgroup=stylusAtRuleMediaFeatureExpression
+      \ skipwhite
+
+syntax match stylusAtRuleFont "@font-face\>"
+      \ containedin=ALLBUT,stylusString,stylusComment
+
+highlight def link stylusAtRuleFont Macro
 " ===============================================
 " COMMENTS
 " ===============================================
