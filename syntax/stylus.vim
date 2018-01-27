@@ -14,10 +14,10 @@ syntax case ignore
 
 " First of all define indented and not indented lines
 syntax match stylusNewLine "^\S\@="
-      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusVariable,stylusExplicitVariable,stylusInterpolationSelectors,stylusFunctionName,stylusConditional,stylusOperatorReturn,stylusAtRuleMedia,stylusAtRuleKeyframes,stylusAtRuleNamespace
+      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusVariable,stylusExplicitVariable,stylusInterpolationSelectors,stylusFunctionName,stylusConditional,stylusOperatorReturn,stylusAtRuleMedia,stylusAtRuleKeyframes,stylusAtRuleNamespace,stylusAtRuleSupports
 
 syntax match stylusNewLineIndented "^\s\+"
-      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusProperty,stylusVariable,stylusExplicitVariable,stylusInterpolation,stylusFunctionName,stylusUnitInt,stylusParenthesised,stylusOperatorReturn,stylusConditional,stylusAtRuleMedia,stylusAtRuleKeyframes,stylusAtRuleKeyframesOffset,stylusAtRuleNamespace
+      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusProperty,stylusVariable,stylusExplicitVariable,stylusInterpolation,stylusFunctionName,stylusUnitInt,stylusParenthesised,stylusOperatorReturn,stylusConditional,stylusAtRuleMedia,stylusAtRuleKeyframes,stylusAtRuleKeyframesOffset,stylusAtRuleNamespace,stylusAtRuleSupports
 
 " ===============================================
 " ENCLOSURES
@@ -768,6 +768,28 @@ syntax region stylusAtRuleNamespaceUrlAdress matchgroup=stylusEnclosure start="(
       \ contained
 
 highlight def link stylusAtRuleNamespaceUrlAdress String
+
+syntax match stylusAtRuleSupports "@supports\>"
+      \ contained
+      \ nextgroup=stylusAtRuleSupportsLogic,stylusAtRuleSupportsDeclaration
+      \ skipwhite
+
+highlight def link stylusAtRuleSupports Macro
+
+
+syntax region stylusAtRuleSupportsDeclaration matchgroup=stylusEnclosure start="(" end=")"
+      \ contained
+      \ contains=stylusProperty,stylusAtRuleSupportsLogic,stylusAtRuleSupportsDeclaration
+      \ nextgroup=stylusAtRuleSupportsLogic,stylusAtRuleSupportsDeclaration
+      \ oneline
+      \ skipwhite
+
+syntax match stylusAtRuleSupportsLogic "\<\(and\|not\|or\)\>"
+      \ contained
+      \ nextgroup=stylusAtRuleSupportsLogic,stylusAtRuleSupportsDeclaration
+      \ skipwhite
+
+highlight def link stylusAtRuleSupportsLogic Operator
 
 " ===============================================
 " COMMENTS
