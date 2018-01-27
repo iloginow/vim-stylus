@@ -14,10 +14,10 @@ syntax case ignore
 
 " First of all define indented and not indented lines
 syntax match stylusNewLine "^\S\@="
-      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusVariable,stylusExplicitVariable,stylusInterpolationSelectors,stylusFunctionName,stylusConditional,stylusOperatorReturn,stylusAtRuleMedia,stylusAtRuleKeyframes,stylusAtRuleNamespace,stylusAtRuleSupports
+      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusVariable,stylusExplicitVariable,stylusInterpolationSelectors,stylusFunctionName,stylusConditional,stylusOperatorReturn,stylusAtRuleMedia,stylusAtRuleKeyframes,stylusAtRuleNamespace,stylusAtRuleSupports,stylusAtRuleDocument,stylusAtRulePage,stylusAtRuleViewport
 
 syntax match stylusNewLineIndented "^\s\+"
-      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusProperty,stylusVariable,stylusExplicitVariable,stylusInterpolation,stylusFunctionName,stylusUnitInt,stylusParenthesised,stylusOperatorReturn,stylusConditional,stylusAtRuleMedia,stylusAtRuleKeyframes,stylusAtRuleKeyframesOffset,stylusAtRuleNamespace,stylusAtRuleSupports
+      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusProperty,stylusVariable,stylusExplicitVariable,stylusInterpolation,stylusFunctionName,stylusUnitInt,stylusParenthesised,stylusOperatorReturn,stylusConditional,stylusAtRuleMedia,stylusAtRuleKeyframes,stylusAtRuleKeyframesOffset,stylusAtRuleNamespace,stylusAtRuleSupports,stylusAtRuleDocument,stylusAtRulePageMarginBoxTypes,stylusAtRuleViewport,stylusAtRuleExtends
 
 " ===============================================
 " ENCLOSURES
@@ -39,7 +39,7 @@ syntax match stylusVariable "\<\(\w\|-\|\$\)*\>"
 
 syntax match stylusExplicitVariable "\$\(\w\|-\|\$\)*\>"
       \ contained
-      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusOperatorAssignment,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusSubscript,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorVarDefinition,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional,stylusHashDotGetter
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusOperatorAssignment,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusSubscript,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorVarDefinition,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional,stylusHashDotGetter,stylusOptional
       \ skipwhite
 
 syntax match stylusExplicitVariable "\<arguments\|block\>"
@@ -87,7 +87,7 @@ highlight def link stylusOperatorTernary Operator
 " Assignment
 syntax match stylusOperatorAssignment "[/\*+-:?]\=="
       \ contained
-      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName,stylusHash
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName,stylusHash,stylusAtRuleBlock
       \ skipwhite
 
 highlight def link stylusOperatorAssignment Operator
@@ -246,7 +246,7 @@ highlight def link stylusBoolean Boolean
 execute 'syn match stylusSelectorElement "\<\(' . join(g:html_elements, '\|') . '\)\(\>\|#\@=\)"
       \ contained
       \ keepend
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional
       \ oneline
       \ skipwhite'
 
@@ -256,7 +256,7 @@ highlight def link stylusSelectorElement Statement
 syntax region stylusSelectorClass start="\." skip="\w-\@=" end="\(\w\|-\)\(\W\|$\)\@="
       \ contained
       \ keepend
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional,stylusOptional
       \ oneline
       \ skipwhite
 
@@ -270,7 +270,7 @@ highlight def link stylusSelectorClass Identifier
 syntax region stylusSelectorId start="#" skip="\w-\@=" end="\(\w\|-\)\(\W\|$\)\@="
       \ contained
       \ keepend
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional
       \ oneline
       \ skipwhite
 
@@ -290,7 +290,7 @@ syntax region stylusSelectorAttribute matchgroup=stylusEnclosure start="\[" skip
       \ contained
       \ contains=stylusSelectorAttributeOperator,stylusInterpolation
       \ keepend
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional
       \ oneline
       \ skipwhite
 
@@ -299,7 +299,7 @@ highlight def link stylusSelectorAttribute Type
 " Parent reference
 syntax match stylusSelectorReference "\(&\|\~/\|\(\.\./\)\+\|/\)"
       \ contained
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorPartialReference,stylusInterpolationSelectors
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional
       \ skipwhite
 
 highlight def link stylusSelectorReference Statement
@@ -309,7 +309,7 @@ syntax region stylusSelectorPartialReference matchgroup=stylusSelectorReference 
       \ contained
       \ contains=stylusEnclosure,stylusUnitInt,stylusInterpolation
       \ keepend
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional
       \ oneline
       \ skipwhite
 
@@ -317,42 +317,42 @@ syntax region stylusSelectorClass start="\(&\|\~/\|\(\.\./\)\+\|/\)" skip="\w[-(
       \ contained
       \ contains=stylusSelectorReference
       \ keepend
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional
       \ oneline
       \ skipwhite
 
 " CSS pseudo classes and elements
 execute 'syntax match stylusSelectorPseudo ":\(' . join(g:css_pseudo, '\|') . '\)"
       \ contained
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo,stylusOptional
       \ skipwhite'
 
 syntax match stylusSelectorPseudo ":\(\(first\|last\|only\)-\(child\|of-type\)\)"
       \ contained
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo,stylusOptional
       \ skipwhite
 
 syntax match stylusSelectorPseudo ":not(.\{-})"
       \ contained
       \ contains=stylusSelectorElement,stylusEnclosure,stylusInterpolationSelectors
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo,stylusOptional
       \ skipwhite
 
 syntax match stylusSelectorPseudo ":lang(.\{-})"
       \ contained
       \ contains=stylusEnclosure,stylusInterpolationSelectors
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo,stylusOptional
       \ skipwhite
 
 syntax match stylusSelectorPseudo ":\(nth-last-\|nth-\)\(child\|of-type\)(.\{-})"
       \ contained
       \ contains=stylusUnitInt,stylusEnclosure,stylusInterpolationSelectors
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo,stylusOptional
       \ skipwhite
 
 syntax match stylusSelectorPseudo /::\=\(first-\(line\|letter\)\|before\|after\|selection\)/
       \ contained
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo,stylusOptional
       \ skipwhite
 
 highlight def link stylusSelectorPseudo Define
@@ -360,7 +360,7 @@ highlight def link stylusSelectorPseudo Define
 " CSS Selector operators
 syntax match stylusSelectorCombinator "[>\~+|,]"
       \ contained
-      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusExplicitVariable
       \ skipwhite
 
 highlight def link stylusSelectorCombinator Operator
@@ -776,7 +776,6 @@ syntax match stylusAtRuleSupports "@supports\>"
 
 highlight def link stylusAtRuleSupports Macro
 
-
 syntax region stylusAtRuleSupportsDeclaration matchgroup=stylusEnclosure start="(" end=")"
       \ contained
       \ contains=stylusProperty,stylusAtRuleSupportsLogic,stylusAtRuleSupportsDeclaration
@@ -791,6 +790,60 @@ syntax match stylusAtRuleSupportsLogic "\<\(and\|not\|or\)\>"
 
 highlight def link stylusAtRuleSupportsLogic Operator
 
+syntax match stylusAtRuleDocument "@document\>"
+      \ contained
+      \ nextgroup=stylusAtRuleDocumentFunc
+      \ skipwhite
+
+highlight def link stylusAtRuleDocument Macro
+
+syntax match stylusAtRuleDocumentFunc "\<\(url\|url-prefix\|domain\|regexp\)(\@="
+      \ contained
+      \ nextgroup=stylusAtRuleNamespaceUrlAdress
+
+highlight def link stylusAtRuleDocumentFunc Function
+
+syntax match stylusAtRulePage "@page\>"
+      \ contained
+      \ nextgroup=stylusAtRulePagePseudo
+      \ skipwhite
+
+highlight def link stylusAtRulePage Macro
+
+syntax match stylusAtRulePagePseudo ":\(left\|right\|first\|blank\)\>"
+      \ contained
+
+highlight def link stylusAtRulePagePseudo Macro
+
+syntax match stylusAtRulePageMarginBoxTypes "@\(top-left-corner\|top-left\|top-center\|top-right\|top-right-corner\|bottom-left-corner\|bottom-left\|bottom-center\|bottom-right\|bottom-right-corner\|left-top\|left-middle\|left-bottom\|right-top\|right-middle\|right-bottom\)\>"
+      \ contained
+
+highlight def link stylusAtRulePageMarginBoxTypes Macro
+
+syntax match stylusAtRuleViewport "@viewport\>"
+      \ contained
+      \ skipwhite
+
+highlight def link stylusAtRuleViewport Macro
+
+syntax match stylusAtRuleBlock "@block\>"
+      \ contained
+
+highlight def link stylusAtRuleBlock Macro
+
+syntax match stylusAtRuleExtends "@extends\=\>"
+      \ contained
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusExplicitVariable
+      \ skipwhite
+
+highlight def link stylusAtRuleExtends Macro
+
+syntax match stylusOptional "!optional"
+      \ contained
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusExplicitVariable
+      \ skipwhite
+
+highlight def link stylusOptional Special
 " ===============================================
 " COMMENTS
 " ===============================================
