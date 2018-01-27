@@ -14,10 +14,10 @@ syntax case ignore
 
 " First of all define indented and not indented lines
 syntax match stylusNewLine "^\S\@="
-      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusVariable,stylusExplicitVariable,stylusInterpolationSelectors,stylusFunctionName,stylusConditional,stylusOperatorReturn,stylusAtRuleMedia
+      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusVariable,stylusExplicitVariable,stylusInterpolationSelectors,stylusFunctionName,stylusConditional,stylusOperatorReturn,stylusAtRuleMedia,stylusAtRuleKeyframes
 
 syntax match stylusNewLineIndented "^\s\+"
-      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusProperty,stylusVariable,stylusExplicitVariable,stylusInterpolation,stylusFunctionName,stylusUnitInt,stylusParenthesised,stylusOperatorReturn,stylusConditional,stylusAtRuleMedia
+      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusProperty,stylusVariable,stylusExplicitVariable,stylusInterpolation,stylusFunctionName,stylusUnitInt,stylusParenthesised,stylusOperatorReturn,stylusConditional,stylusAtRuleMedia,stylusAtRuleKeyframes,stylusAtRuleKeyframesOffset
 
 " ===============================================
 " ENCLOSURES
@@ -721,6 +721,29 @@ syntax match stylusAtRuleFont "@font-face\>"
       \ containedin=ALLBUT,stylusString,stylusComment
 
 highlight def link stylusAtRuleFont Macro
+
+syntax match stylusAtRuleKeyframes "@\(-\(o\|webkit\|moz\)-\)\=keyframes"
+      \ contained
+      \ nextgroup=stylusAtRuleKeyframesName,stylusInterpolationSelectors
+      \ skipwhite
+
+highlight def link stylusAtRuleKeyframes Macro
+
+syntax match stylusAtRuleKeyframesName "\<\(\w\|-\|\$\)*\>"
+      \ contained
+      \ nextgroup=stylusInterpolationSelectors
+      \ skipwhite
+
+highlight def link stylusAtRuleKeyframesName Identifier
+
+syntax match stylusAtRuleKeyframesOffset "\d\{1,3}%"
+      \ contained
+
+syntax match stylusAtRuleKeyframesOffset "\<\(from\|to\)\>"
+      \ contained
+
+highlight def link stylusAtRuleKeyframesOffset Macro
+
 " ===============================================
 " COMMENTS
 " ===============================================
