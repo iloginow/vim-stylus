@@ -48,7 +48,9 @@ setlocal suffixesadd=.styl
 " Add '-' and '#' to the what makes up a keyword.
 " This means that 'e' and 'w' work properly now, for properties
 " and valid variable names.
-setl iskeyword+=#,-
+setlocal iskeyword+=#,-
+
+setlocal omnifunc=stylcomplete#CompleteStyl
 
 let b:undo_ftplugin = "setl cms< com< "
       \ " | unlet! b:browsefilter b:match_words | " . s:undo_ftplugin

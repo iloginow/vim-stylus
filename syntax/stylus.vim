@@ -1,6 +1,6 @@
 " Vim syntax file
 " Language:	Stylus
-" Maintainer:	Ilia Loginov <iloginow@outlook.com>
+" Author:	Ilia Loginov <iloginow@outlook.com>
 " Created:	Jan 5, 2018
 
 if !exists("main_syntax")
