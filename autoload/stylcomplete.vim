@@ -8,17 +8,17 @@ fun! stylcomplete#CompleteStyl(findstart, base)
   if a:findstart
     let line = getline('.')
     let start = col('.') - 1
-    while start > 0 && line[start - 1] !~ '\(\s\|\[\|(\|{\|.:\@=\)'
+    while start > 0 && line[start - 1] !~ '\(\s\|\[\|(\|{\|:\)'
       let start -= 1
     endwhile
     let b:start = line[start]
+    let b:before = line[start - 1]
     let b:line = line[0:col('.')]
+    let b:first_char = matchstrpos(b:line, '^\s*\S')[2]
+    let b:first_word_type = synIDattr(synID(line('.'), b:first_char, 1), 'name')
     " Check if there is more than one word on the current line
-    if b:line =~ '.*\S\(\s\|\[\|(\|{\|.:\@=\)\S.*'
+    if b:line =~ '.*\S\(\s\|\[\|(\|{\|:\)\S.*'
       let b:word_break = 1
-      " If that is the case, find out what kind of word it is
-      let b:first_char = matchstrpos(b:line, '^\s*\S')[2]
-      let b:first_word_type = synIDattr(synID(line('.'), b:first_char, 1), 'name')
     endif
     return start
   endif
@@ -27,6 +27,30 @@ fun! stylcomplete#CompleteStyl(findstart, base)
   if b:start =~ '\w' && exists('b:word_break') == 0
     let res = []
     for m in g:css_props
+      if m =~ '^' . a:base
+        call add(res, m)
+      endif
+    endfor
+    return res
+
+  " Complete pseudo classes and elements
+  elseif b:before == ':' && b:first_word_type =~ 'stylusSelector\w*'
+    let values = ["active", "any", "any-link", "blank", "checked", "cue", "cue-region", "disabled", "enabled", "default", "dir(", "disabled", "drop", "drop(", "empty", "enabled", "first", "first-child", "first-of-type", "fullscreen", "future", "focus", "focus-within", "has(", "hover", "indeterminate", "in-range", "invalid", "lang(", "last-child", "last-of-type", "left", "link", "matches(", "not(", "nth-child(", "nth-column(", "nth-last-child(", "nth-last-column(", "nth-last-of-type(", "nth-of-type(", "only-child", "only-of-type", "optional", "out-of-range", "past", "paused", "placeholder-shown", "playing", "read-only", "read-write", "required", "right", "root", "scope", "target", "user-invalid", "valid", "visited", "first-line", "first-letter", "before", "after", "selection", "backdrop"]
+
+    let res = []
+    for m in values
+      if m =~ '^' . a:base
+        call add(res, m)
+      endif
+    endfor
+    return res
+
+  " Complete !important and !optional
+  elseif b:start == '!' && exists('b:word_break') == 1 && b:first_word_type == 'stylusProperty'
+    let values = ["important", "optional"]
+
+    let res = []
+    for m in values
       if m =~ '^' . a:base
         call add(res, m)
       endif
@@ -83,7 +107,7 @@ fun! stylcomplete#CompleteStyl(findstart, base)
     elseif prop == 'background-image'
       let values = ["url(", "none"]
     elseif prop == 'background-position'
-      let vals = matchstr(line, '.*:\s*\zs.*')
+      let vals = matchstr(b:line, '.*:\s*\zs.*')
       if vals =~ '^\%([a-zA-Z]\+\)\?$'
         let values = ["top", "center", "bottom"]
       elseif vals =~ '^[a-zA-Z]\+\s\+\%([a-zA-Z]\+\)\?$'
@@ -98,7 +122,7 @@ fun! stylcomplete#CompleteStyl(findstart, base)
     elseif prop == 'background'
       let values = ["scroll", "fixed"] + color_values + ["url(", "none"] + ["top", "center", "bottom", "left", "right"] + ["repeat", "repeat-x", "repeat-y", "no-repeat"] + ["auto", "contain", "cover"]
     elseif prop =~ '^border\%(-top\|-right\|-bottom\|-left\|-block-start\|-block-end\)\?$'
-      let vals = matchstr(line, '.*:\s*\zs.*')
+      let vals = matchstr(b:line, '.*:\s*\zs.*')
       if vals =~ '^\%([a-zA-Z0-9.]\+\)\?$'
         let values = border_width_values
       elseif vals =~ '^[a-zA-Z0-9.]\+\s\+\%([a-zA-Z]\+\)\?$'
@@ -155,7 +179,7 @@ fun! stylcomplete#CompleteStyl(findstart, base)
     elseif prop == 'column-rule-width'
       let values = border_width_values
     elseif prop == 'column-rule'
-      let vals = matchstr(line, '.*:\s*\zs.*')
+      let vals = matchstr(b:line, '.*:\s*\zs.*')
       if vals =~ '^\%([a-zA-Z0-9.]\+\)\?$'
         let values = border_width_values
       elseif vals =~ '^[a-zA-Z0-9.]\+\s\+\%([a-zA-Z]\+\)\?$'
@@ -308,7 +332,7 @@ fun! stylcomplete#CompleteStyl(findstart, base)
     elseif prop == 'outline-width'
       let values = ["thin", "thick", "medium"]
     elseif prop == 'outline'
-      let vals = matchstr(line, '.*:\s*\zs.*')
+      let vals = matchstr(b:line, '.*:\s*\zs.*')
       if vals =~ '^\%([a-zA-Z0-9,()#]\+\)\?$'
         let values = color_values
       elseif vals =~ '^[a-zA-Z0-9,()#]\+\s\+\%([a-zA-Z]\+\)\?$'
@@ -385,7 +409,7 @@ fun! stylcomplete#CompleteStyl(findstart, base)
     elseif prop == 'symbols'
       let values = []
     elseif prop == 'system'
-      let vals = matchstr(line, '.*:\s*\zs.*')
+      let vals = matchstr(b:line, '.*:\s*\zs.*')
       if vals =~ '^extends'
         let values = list_style_type_values
       else
@@ -510,6 +534,36 @@ fun! stylcomplete#CompleteStyl(findstart, base)
         call add(res, m)
       endif
     endfor
+    return res
+
+  " Complete @-rules
+
+  elseif b:start =~ '\w' && exists('b:word_break') == 1 && b:first_word_type == 'stylusAtRuleMedia'
+
+    let values = ["min-width", "min-height", "max-width", "max-height"]
+
+    let res = []
+
+    for m in values
+      if m =~ '^' . a:base
+        call add(res, m . ': ')
+      endif
+    endfor
+
+    return res
+
+  elseif b:start == '@'
+
+    let values = ["@media", "@import", "@extend", "@block", "@charset", "@page", "@font-face", "@namespace", "@supports", "@keyframes", "@viewport", "@document", "@css"]
+
+    let res = []
+
+    for m in values
+      if m =~ '^' . a:base
+        call add(res, m .' ')
+      endif
+    endfor
+
     return res
 
   endif
