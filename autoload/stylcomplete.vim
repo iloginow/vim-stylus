@@ -17,14 +17,15 @@ fun! stylcomplete#CompleteStyl(findstart, base)
     let b:first_char = matchstrpos(b:line, '^\s*\S')[2]
     let b:first_word_type = synIDattr(synID(line('.'), b:first_char, 1), 'name')
     " Check if there is more than one word on the current line
-    if b:line =~ '.*\S\(\s\|\[\|(\|{\|:\)\S.*'
+    let b:word_break = 0
+    if b:line =~ '^.*\S\(\s\|\[\|(\|{\|:\)\S.*'
       let b:word_break = 1
     endif
     return start
   endif
 
   " Complete properties
-  if b:start =~ '\w' && exists('b:word_break') == 0
+  if b:start =~ '\w' && b:word_break == 0
     let res = []
     for m in g:css_props
       if m =~ '^' . a:base
@@ -46,7 +47,7 @@ fun! stylcomplete#CompleteStyl(findstart, base)
     return res
 
   " Complete !important and !optional
-  elseif b:start == '!' && exists('b:word_break') == 1 && b:first_word_type == 'stylusProperty'
+  elseif b:start == '!' && b:word_break == 1 && b:first_word_type == 'stylusProperty'
     let values = ["important", "optional"]
 
     let res = []
@@ -58,7 +59,7 @@ fun! stylcomplete#CompleteStyl(findstart, base)
     return res
 
   " Complete values
-  elseif b:start =~ '\w' && exists('b:word_break') == 1 && b:first_word_type == 'stylusProperty'
+  elseif b:start =~ '\w' && b:word_break == 1 && b:first_word_type == 'stylusProperty'
     let prop = matchstr(b:line, '\(^\s\+\)\@<=\<\(\w\|-\)\+\>')
     let res = []
 
@@ -538,7 +539,7 @@ fun! stylcomplete#CompleteStyl(findstart, base)
 
   " Complete @-rules
 
-  elseif b:start =~ '\w' && exists('b:word_break') == 1 && b:first_word_type == 'stylusAtRuleMedia'
+  elseif b:start =~ '\w' && b:word_break == 1 && b:first_word_type == 'stylusAtRuleMedia'
 
     let values = ["min-width", "min-height", "max-width", "max-height"]
 
