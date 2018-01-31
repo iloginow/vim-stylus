@@ -28,5 +28,4 @@ Otherwise, you can just download this repo and unzip it right into your ```~/.vi
 ## Autocomplete caveat
 
 If you really want to take advantage of fast, effective and convinient CSS workflow, you probably need the autocomplete function to behave the same way it does on a small presentation above. You can see that it pops out automatically. And you can find several ways of doing this in <a href="http://vimdoc.sourceforge.net" target="_blank">vim's documentation</a>. But the easiest one in my opinion is a plugin called <a href="https://github.com/lifepillar/vim-mucomplete" target="_blank">MUcomplete</a>.
-
-You can certainly choose heavy Python-powered engines like <a href="https://github.com/Valloric/YouCompleteMe" target="_blank">YouCompleteMe</a>. But my recommendation is just <a href="https://en.wikipedia.org/wiki/KISS_principle" target="_blank">KISS</a>.
+You can certainly choose heavy Python-powered engines like <a href="https://github.com/Valloric/YouCompleteMe" target="_blank">YouCompleteMe</a>. But make sure you're aware of <a href="https://en.wikipedia.org/wiki/KISS_principle" target="_blank">KISS</a>.
