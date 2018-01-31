@@ -1,7 +1,7 @@
 # Vim Stylus
 
 <p align="center">
-   <img src="https://user-images.githubusercontent.com/23266023/35612665-a2173006-067a-11e8-9141-35b2b1bde9cc.gif"><br><a href="http://vim.org/" target="_blank">Vim</a> + <a href="http://stylus-lang.com/" target="_blank">Stylus</a> = fast, effective and convinient CSS workflow!
+   <img src="https://user-images.githubusercontent.com/23266023/35612665-a2173006-067a-11e8-9141-35b2b1bde9cc.gif"><br><a href="http://vim.org/" target="_blank">Vim</a> + <a href="http://stylus-lang.com/" target="_blank">Stylus</a> = fast, effective and convenient CSS workflow!
 </p>
 
 ## Features
@@ -27,7 +27,7 @@ Otherwise, you can just download this repo and unzip it right into your ```~/.vi
 
 ## Autocomplete caveat
 
-If you really want to take advantage of fast, effective and convinient CSS workflow, you probably need the autocomplete function to behave the same way it does on a small presentation above. You can see that it pops out automatically. And you can find several ways of doing this in <a href="http://vimdoc.sourceforge.net" target="_blank">vim's documentation</a>. But the easiest one in my opinion is a plugin called <a href="https://github.com/lifepillar/vim-mucomplete" target="_blank">MUcomplete</a>.
+If you really want to take advantage of fast, effective and convenient CSS workflow, you probably need the autocomplete function to behave the same way it does on a small presentation above. You can see that it pops out automatically. And you can find several ways of doing this in <a href="http://vimdoc.sourceforge.net" target="_blank">vim's documentation</a>. But the easiest one in my opinion is a plugin called <a href="https://github.com/lifepillar/vim-mucomplete" target="_blank">MUcomplete</a>.
 You can certainly choose heavy Python-powered engines like <a href="https://github.com/Valloric/YouCompleteMe" target="_blank">YouCompleteMe</a>. Just make sure that you're aware of the <a href="https://en.wikipedia.org/wiki/KISS_principle" target="_blank">KISS principle</a>:).
 
 ## Why it is not a <a href="https://github.com/wavded/vim-stylus" target="_blank">wavded/vim-stylus</a> fork?
