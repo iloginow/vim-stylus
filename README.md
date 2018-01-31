@@ -40,7 +40,7 @@ If you're looking at this README file right now, I assume that you have most lik
 
 So far, so good... The next question you'd probably ask yourself is how do you seamlessly integrate this amazing new tool into you workflow!? What you want is correct syntax highlighting, indentation and autocomplete. Because that's what you expect from any modern editor or IDE. If you ask google for a solution, <a href="https://github.com/wavded/vim-stylus" target="_blank">wavded/vim-stylus</a> repo is what you get.
 
-To make a long story short, when I started to use it poor syntax highlighting caught my eye immediately. Unfortunately, I got no autocomplete whatsoever and you could even see autoindent function do weird things from time to time. No offense to the authors, keep up the great work.
+To make a long story short, when I started to use it, poor syntax highlighting caught my eye immediately. Unfortunately, I got no autocomplete whatsoever and you could even see autoindent function do weird things from time to time. No offense to the authors, keep up the great work.
 
 My first intention was to fork the repo and fix those bugs one by one. And I did forked the repo but when I looked at the code, I realized that it was not really a plugin but a mixture of https://github.com/lepture/vim-css and https://github.com/tpope/vim-haml roughly sewed together. Then I looked at the date of the last commit... and it was 2 years ago. And that's when I got the idea that in order to make this thing work properly I probably need to start it from scratch.
 
