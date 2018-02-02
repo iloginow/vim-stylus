@@ -376,7 +376,12 @@ highlight def link stylusSelectorCombinator Operator
 " PROPERTIES
 " ===============================================
 
-execute 'syntax match stylusProperty "\<\(' . join(g:css_props, '\|') . '\)\>:\="
+execute 'syntax match stylusProperty "\<\(' . join(g:css_single_props, '\|') . '\)\>:\="
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusInterpolationProperties,stylusFunctionName
+      \ skipwhite'
+
+execute 'syntax match stylusProperty "\<\(' . join(g:css_multi_props, '\|') . '\)\>:\="
       \ contained
       \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusInterpolationProperties,stylusFunctionName
       \ skipwhite'
