@@ -255,4 +255,5 @@ let g:css_values = [
   \'tb-rl',
   \'rl-tb',
   \'lr-tb',
+  \'unset',
 \]

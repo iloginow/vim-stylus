@@ -220,4 +220,5 @@ let g:css_props = [
       \'word-wrap',
       \'writing-mode',
       \'z-index'
+      \'zoom'
 \]
