@@ -250,6 +250,13 @@ execute 'syn match stylusSelectorElement "\<\(' . join(g:html_elements, '\|') . 
       \ oneline
       \ skipwhite'
 
+syn match stylusSelectorElement "\(^\|\s\)\@<=\*\($\|\s\)\@="
+      \ contained
+      \ keepend
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional
+      \ oneline
+      \ skipwhite
+
 highlight def link stylusSelectorElement Statement
 
 " CSS Class

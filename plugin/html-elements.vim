@@ -1,5 +1,4 @@
 let g:html_elements = [
-      \'\*',
       \'a',
       \'abbr',
       \'acronym',
