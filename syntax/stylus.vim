@@ -423,12 +423,12 @@ highlight def link stylusPropertyLookup Type
 " VALUES
 " ===============================================
 
-execute 'syntax match stylusValues "\<\(' . join(g:css_values, '\|') . '\)\>"
+execute 'syntax match stylusValues "\<\(' . join(g:css_values, '\|') . '\)\>-\@!"
       \ contained
       \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName
       \ skipwhite'
 
-execute 'syntax match stylusValues "\<\(' . join(g:css_animatable_props, '\|') . '\)\>"
+execute 'syntax match stylusValues "\<\(' . join(g:css_animatable_props, '\|') . '\)\>-\@!"
       \ contained
       \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName
       \ skipwhite'
@@ -472,7 +472,7 @@ highlight def link stylusFont Directory
 
 " ===============================================
 " Explicitly point out that the word before assignment operator is a variable
-syntax match stylusVariable "\<\(\w\|-\|\$\)*\(\s\=[:?]\==[^=]\)\@="
+syntax match stylusVariable "\<\(\w\|-\)*\(\s\=[:?]\==[^=]\)\@="
       \ contained
       \ nextgroup=stylusOperatorAssignment
       \ skipwhite

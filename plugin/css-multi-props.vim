@@ -179,4 +179,5 @@ let g:css_multi_props = [
       \'word-spacing',
       \'word-wrap',
       \'writing-mode',
+      \'z-index',
 \]

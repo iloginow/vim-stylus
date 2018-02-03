@@ -469,7 +469,7 @@ fun! stylcomplete#CompleteStyl(findstart, base)
     elseif prop == 'top'
       let values = ["auto"]
     elseif prop == 'transition-property'
-      let values = ["all", "none"] + s:values
+      let values = ["all", "none"] + g:css_animatable_props
     elseif prop == 'transition-duration'
       let values = []
     elseif prop == 'transition-delay'
@@ -477,7 +477,7 @@ fun! stylcomplete#CompleteStyl(findstart, base)
     elseif prop == 'transition-timing-function'
       let values = timing_functions
     elseif prop == 'transition'
-      let values = ["all", "none"] + s:values + timing_functions
+      let values = ["all", "none"] + g:css_animatable_props + timing_functions
     elseif prop == 'unicode-bidi'
       let values = ["normal", "embed", "isolate", "bidi-override", "isolate-override", "plaintext"]
     elseif prop == 'unicode-range'
