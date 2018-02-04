@@ -677,6 +677,8 @@ syntax region stylusHash matchgroup=stylusEnclosure start="{" end="}"
 
 syntax match stylusAtRuleImport "@\(import\|require\)\>"
       \ containedin=ALLBUT,stylusString,stylusComment
+      \ nextgroup=stylusFunctionName,stylusVariable,stylusExplicitVariable
+      \ skipwhite
 
 highlight def link stylusAtRuleImport Macro
 
