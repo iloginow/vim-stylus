@@ -329,7 +329,7 @@ syntax region stylusSelectorClass start="\(&\|\~/\|\(\.\./\)\+\|/\)" skip="\w[-(
       \ skipwhite
 
 " CSS pseudo classes and elements
-execute 'syntax match stylusSelectorPseudo ":\(' . join(g:css_pseudo, '\|') . '\)"
+execute 'syntax match stylusSelectorPseudo ":\(' . join(g:css_pseudo, '\|') . '\)-\@!"
       \ contained
       \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo,stylusOptional
       \ skipwhite'
@@ -357,7 +357,7 @@ syntax match stylusSelectorPseudo ":\(nth-last-\|nth-\)\(child\|of-type\)(.\{-})
       \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo,stylusOptional
       \ skipwhite
 
-syntax match stylusSelectorPseudo /::\=\(first-\(line\|letter\)\|before\|after\|selection\)/
+syntax match stylusSelectorPseudo /::\=\(first-\(line\|letter\)\|before\|after\|selection\|placeholder\)/
       \ contained
       \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo,stylusOptional
       \ skipwhite
@@ -376,17 +376,17 @@ highlight def link stylusSelectorCombinator Operator
 " PROPERTIES
 " ===============================================
 
-execute 'syntax match stylusProperty "\<\(' . join(g:css_single_props, '\|') . '\)\>:\="
+execute 'syntax match stylusProperty "\<\(' . join(g:css_single_props, '\|') . '\)\>-\@!:\="
       \ contained
       \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusInterpolationProperties,stylusFunctionName
       \ skipwhite'
 
-execute 'syntax match stylusProperty "\<\(' . join(g:css_multi_props, '\|') . '\)\>:\="
+execute 'syntax match stylusProperty "\<\(' . join(g:css_multi_props, '\|') . '\)\>-\@!:\="
       \ contained
       \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusInterpolationProperties,stylusFunctionName
       \ skipwhite'
 
-execute 'syntax match stylusProperty "\<\(' . join(g:svg_props, '\|') . '\)\>:\="
+execute 'syntax match stylusProperty "\<\(' . join(g:svg_props, '\|') . '\)\>-\@!:\="
       \ contained
       \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusInterpolationProperties,stylusFunctionName
       \ skipwhite'
@@ -402,12 +402,12 @@ highlight def link stylusProperty Type
 " PROPERTY LOOKUP
 " ===============================================
 
-execute 'syntax match stylusPropertyLookup "@\(' . join(g:css_props, '\|') . '\)\>"
+execute 'syntax match stylusPropertyLookup "@\(' . join(g:css_props, '\|') . '\)\>-\@!"
       \ contained
       \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
       \ skipwhite'
 
-execute 'syntax match stylusPropertyLookup "@\(' . join(g:svg_props, '\|') . '\)\>"
+execute 'syntax match stylusPropertyLookup "@\(' . join(g:svg_props, '\|') . '\)\>-\@!"
       \ contained
       \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
       \ skipwhite'
@@ -440,7 +440,7 @@ highlight def link stylusValues PreCondit
 " ===============================================
 
 " Named
-execute 'syntax match stylusColor "\<\(' . join(g:css_colors, '\|') . '\)\>"
+execute 'syntax match stylusColor "\<\(' . join(g:css_colors, '\|') . '\)\>-\@!"
       \ contained
       \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusOperatorAdditive,stylusImportant,stylusFunctionName,stylusConditional
       \ skipwhite'
