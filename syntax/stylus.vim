@@ -47,7 +47,7 @@ syntax match stylusExplicitVariable "\<arguments\|block\>"
       \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusSubscript,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorVarDefinition,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional,stylusHashDotGetter
       \ skipwhite
 
-highlight def link stylusExplicitVariable NonText
+highlight def link stylusExplicitVariable Identifier
 
 " ===============================================
 " OPERATORS
