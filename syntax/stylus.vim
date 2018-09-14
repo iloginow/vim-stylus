@@ -260,7 +260,7 @@ syn match stylusSelectorElement "\(^\|\s\)\@<=\*\($\|\s\)\@="
 highlight def link stylusSelectorElement Statement
 
 " CSS Class
-syntax region stylusSelectorClass start="\." skip="\w-\@=" end="\(\w\|-\)\(\W\|$\)\@="
+syntax region stylusSelectorClass start="\." skip="\w-\@=" end="\(\w\|-+\)\(\W\|$\)\@="
       \ contained
       \ keepend
       \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional,stylusOptional
@@ -274,7 +274,7 @@ syntax match stylusSelectorClass "\.{\@="
 highlight def link stylusSelectorClass Identifier
 
 " CSS Id
-syntax region stylusSelectorId start="#" skip="\w-\@=" end="\(\w\|-\)\(\W\|$\)\@="
+syntax region stylusSelectorId start="#" skip="\w-\@=" end="\(\w\|-+\)\(\W\|$\)\@="
       \ contained
       \ keepend
       \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional
