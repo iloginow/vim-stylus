@@ -45,3 +45,9 @@ To make a long story short, when I started to use it, poor syntax highlighting c
 My first intention was to fork the repo and fix those bugs one by one. And I did forked the repo but when I looked at the code, I realized that it was not really a plugin but a mixture of https://github.com/lepture/vim-css and https://github.com/tpope/vim-haml roughly sewed together. Then I looked at the date of the last commit... and it was 2 years ago. And that's when I got the idea that in order to make this thing work properly I probably need to start it from scratch.
 
 That was my story. And who knows... You might find a lot of things you don't like about my plulgin as well. Anyway, pull requests are more than welcome!!! And I promise to process them as fast as it possibly gets.
+
+## Autocomplete and highlighting
+```
+autocmd BufNewFile,BufRead *.styl setlocal filetype=stylus
+autocmd BufNewFile,BufRead *.stylus setlocal filetype=stylus
+```
