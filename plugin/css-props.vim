@@ -157,6 +157,7 @@ let g:css_props = [
       \'image-rendering',
       \'image-resolution',
       \'justify-content',
+      \'justify-items',
       \'left',
       \'letter-spacing',
       \'line-break',

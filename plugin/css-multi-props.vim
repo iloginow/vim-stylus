@@ -134,6 +134,7 @@ let g:css_multi_props = [
       \'image-rendering',
       \'image-resolution',
       \'justify-content',
+      \'justify-items',
       \'letter-spacing',
       \'line-break',
       \'line-height',
